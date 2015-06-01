@@ -56,6 +56,7 @@ public class Shift {
         this.aantalMedewerkersNodig = aantalMedewerkersNodig;
     }
 
+    //indien het aantal medewerkers nog niet bereikt is, voeg medewerker toe. Anders gooi exception
     public void voegMedewerkerToe(Medewerker medewerker) throws Exception {
 
         if(getMedewerkers().size() < getAantalMedewerkersNodig())

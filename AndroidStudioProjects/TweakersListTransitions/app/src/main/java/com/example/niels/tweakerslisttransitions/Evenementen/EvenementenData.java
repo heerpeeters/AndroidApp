@@ -29,8 +29,8 @@ public class EvenementenData {
         Evenement fluolicious = new Evenement("2", "Fluolicious");
         Evenement stamavond = new Evenement("3", "Gewone Stamavond");
 
-        cocktailavond.getLijst().add(3);
-        cocktailavond.getLijst().add(4);
+        cocktailavond.getLijst().add(new Shift("20:00", "22:00"));
+        cocktailavond.getLijst().add(new Shift("22:00", "24:00"));
 
         addItem(cocktailavond);
         addItem(fluolicious);
