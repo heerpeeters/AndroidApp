@@ -52,6 +52,8 @@ public class EvenementDetailFragment extends ListFragment {
             // to load content from a content provider.
             evenement = EvenementenData.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
+            //git test
+
             setListAdapter(new ArrayAdapter<Shift>(
                     getActivity(),
                     android.R.layout.simple_list_item_activated_1,
