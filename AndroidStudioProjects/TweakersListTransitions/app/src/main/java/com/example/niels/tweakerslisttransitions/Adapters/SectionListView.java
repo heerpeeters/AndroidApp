@@ -5,18 +5,13 @@ import android.os.Bundle;
 
 public class SectionListView extends ListActivity {
 
-    private CustomAdapter mAdapter;
+    private ShiftCategorieAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new CustomAdapter(this);
-        for (int i = 1; i < 30; i++) {
-            mAdapter.addItem("Row Item #" + i);
-            if (i % 4 == 0) {
-                mAdapter.addSectionHeaderItem("Section #" + i);
-            }
-        }
+        mAdapter = new ShiftCategorieAdapter(this);
+        
         setListAdapter(mAdapter);
     }
 

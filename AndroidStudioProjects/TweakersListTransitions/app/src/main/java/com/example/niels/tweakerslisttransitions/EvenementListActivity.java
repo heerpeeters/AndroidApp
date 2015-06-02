@@ -35,8 +35,6 @@ public class EvenementListActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-
-
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -76,6 +74,8 @@ public class EvenementListActivity extends FragmentActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ShiftCategorieActivity.class);
+            //detailIntent.putExtra(ShiftCategorieActivity.ARG_EVENT_ID, id);
+            detailIntent.putExtra("id", id);
             detailIntent.putExtra(ShiftCategorieDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }

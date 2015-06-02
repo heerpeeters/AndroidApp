@@ -1,5 +1,10 @@
 package com.example.niels.tweakerslisttransitions.Evenementen;
 
+import android.content.Context;
+import android.widget.Toast;
+
+import com.example.niels.tweakerslisttransitions.ShiftCategorieActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +37,24 @@ public class EvenementenData {
         cocktailavond.getLijst().add(new ShiftCategorie("1", "Toog"));
         cocktailavond.getLijst().add(new ShiftCategorie("2", "Inkom"));
 
-        cocktailavond.getById("1").getShiften().add(new Shift("20:00", "22:00"));
-        cocktailavond.getById("1").getShiften().add(new Shift("22:00", "24:00"));
+        fluolicious.getLijst().add(new ShiftCategorie("1", "Toog"));
+        stamavond.getLijst().add(new ShiftCategorie("1", "Toog"));
+
+        cocktailavond.getById("1").getShiften().add(new Shift("20:00", "22:00", "1"));
+        cocktailavond.getById("1").getShiften().add(new Shift("22:00", "24:00", "2"));
+
+        fluolicious.getById("1").getShiften().add(new Shift("20:00", "22:00", "1"));
+        fluolicious.getById("1").getShiften().add(new Shift("22:00", "24:00", "2"));
+
+        stamavond.getById("1").getShiften().add(new Shift("20:00", "22:00", "1"));
+        stamavond.getById("1").getShiften().add(new Shift("22:00", "24:00", "2"));
+
+        try {
+            cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker());
+            cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker());
+        } catch (Exception e) {
+
+        }
 
         addItem(cocktailavond);
         addItem(fluolicious);

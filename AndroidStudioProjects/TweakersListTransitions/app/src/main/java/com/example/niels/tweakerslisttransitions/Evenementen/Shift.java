@@ -1,13 +1,14 @@
 package com.example.niels.tweakerslisttransitions.Evenementen;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Niels on 1/06/2015.
  */
-public class Shift {
+public class Shift implements iShift{
 
-
+    private String id;
 
     //later vervangen door Date of Time, zodat we met timepicker kunnen werken
     private String beginUur, eindUur;
@@ -16,13 +17,14 @@ public class Shift {
     private List<Medewerker> medewerkers;
 
     //Het aantal medewerkers nodig voor de shift
-    private int aantalMedewerkersNodig;
+    private int aantalMedewerkersNodig = 2;
 
-    public Shift(String start, String einde){
+    public Shift(String start, String einde, String id){
 
+        setId(id);
         setBeginUur(start);
         setEindUur(einde);
-
+        medewerkers = new ArrayList<>();
     }
 
     public String getBeginUur() {
@@ -56,6 +58,14 @@ public class Shift {
         this.aantalMedewerkersNodig = aantalMedewerkersNodig;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     //indien het aantal medewerkers nog niet bereikt is, voeg medewerker toe. Anders gooi exception
     public void voegMedewerkerToe(Medewerker medewerker) throws Exception {
 
@@ -70,7 +80,7 @@ public class Shift {
     @Override
     public String toString(){
 
-        return getBeginUur() + getEindUur() + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
+        return getBeginUur()+ " - " + getEindUur() + "              " + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
 
     }
 }

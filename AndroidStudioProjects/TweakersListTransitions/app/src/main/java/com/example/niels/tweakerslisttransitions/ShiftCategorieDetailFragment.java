@@ -2,9 +2,9 @@ package com.example.niels.tweakerslisttransitions;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.widget.ArrayAdapter;
 
 
+import com.example.niels.tweakerslisttransitions.Adapters.ShiftCategorieAdapter;
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
 import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
@@ -45,15 +45,20 @@ public class ShiftCategorieDetailFragment extends ListFragment {
             evenement = EvenementenData.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
 
             //git test
+            ShiftCategorieAdapter ca = new ShiftCategorieAdapter(getActivity());
 
-            setListAdapter(new ArrayAdapter<ShiftCategorie>(
+            for(ShiftCategorie sc : evenement.getLijst())
+                ca.addSectionHeaderItem(sc);
+
+            setListAdapter(ca);
+
+            /*setListAdapter(new ShiftCategorieAdapter(
                     getActivity(),
-                    android.R.layout.simple_list_item_activated_1,
-                    android.R.id.text1,
-                    evenement.getLijst()));
+                    evenement.getLijst()));*/
 
 
         }
+
     }
 
 }

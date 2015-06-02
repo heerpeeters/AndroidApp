@@ -8,29 +8,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
+import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
 import com.example.niels.tweakerslisttransitions.R;
 
-public class CustomAdapter extends BaseAdapter {
+public class ShiftCategorieAdapter extends BaseAdapter {
+
+    //Deze adapter zorgt voor de uitvoer van de lijst met shiftcategorieën
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
 
-    private ArrayList<String> mData = new ArrayList<String>();
+    private ArrayList<iShift> mData = new ArrayList<>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
 
     private LayoutInflater mInflater;
 
-    public CustomAdapter(Context context) {
+    public ShiftCategorieAdapter(Context context) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void addItem(final String item) {
+    public ShiftCategorieAdapter(Context context, ArrayList<iShift> categories) {
+
+        mData = categories;
+        mInflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void addItem(final iShift item) {
         mData.add(item);
         notifyDataSetChanged();
     }
 
-    public void addSectionHeaderItem(final String item) {
+    public void addSectionHeaderItem(final iShift item) {
         mData.add(item);
         sectionHeader.add(mData.size() - 1);
         notifyDataSetChanged();
@@ -52,7 +64,7 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public iShift getItem(int position) {
         return mData.get(position);
     }
 
@@ -81,7 +93,7 @@ public class CustomAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.textView.setText(mData.get(position));
+        holder.textView.setText(mData.get(position).toString());
 
         return convertView;
     }

@@ -8,8 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
+import com.example.niels.tweakerslisttransitions.Adapters.EvenementAdapter;
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A list fragment representing a list of Items. This fragment
@@ -72,12 +76,21 @@ public class EvenementListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        EvenementAdapter ea = new EvenementAdapter(getActivity());
+
+        List<Evenement> evenementen = EvenementenData.ITEMS;
+
+        for(Evenement event : evenementen)
+            ea.addSectionHeaderItem(event);
+
+        setListAdapter(ea);
+
         // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<Evenement>(
+        /*setListAdapter(new ArrayAdapter<Evenement>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                EvenementenData.ITEMS));
+                EvenementenData.ITEMS));*/
     }
 
     @Override

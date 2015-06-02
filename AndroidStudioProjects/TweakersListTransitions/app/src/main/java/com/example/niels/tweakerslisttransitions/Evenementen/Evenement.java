@@ -72,6 +72,7 @@ public class Evenement {
 
     }
 
+    //zet date om naar gemakkelijk te lezen string formaat
     private String converteerDatum(Date date){
 
         Calendar cal = Calendar.getInstance();
@@ -83,6 +84,8 @@ public class Evenement {
         return day + "/" + month + "/" + year;
 
     }
+
+    //Staat toe om een shiftcategorie op id te vinden
 
     public ShiftCategorie getById(String id)throws Resources.NotFoundException{
 

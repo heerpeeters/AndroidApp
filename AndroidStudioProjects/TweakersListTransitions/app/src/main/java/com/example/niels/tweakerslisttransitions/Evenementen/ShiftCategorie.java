@@ -1,12 +1,14 @@
 package com.example.niels.tweakerslisttransitions.Evenementen;
 
+import android.content.res.Resources;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by Niels on 1/06/2015.
  */
-public class ShiftCategorie {
+public class ShiftCategorie implements iShift {
 
     //naam van de categorie, zoals 'toog' of 'inkom'
     private String naam, id;
@@ -52,5 +54,15 @@ public class ShiftCategorie {
 
     }
 
+    public Shift getShiftById(String id)throws Resources.NotFoundException{
+
+        for(Shift s : getShiften()){
+
+            if(id.compareTo(s.getId()) == 0)
+                return s;
+
+        }
+        throw new Resources.NotFoundException("Shift niet gevonden");
+    }
 
 }
