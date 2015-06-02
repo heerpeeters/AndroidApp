@@ -9,13 +9,13 @@ import android.support.v4.app.FragmentActivity;
  * An activity representing a list of Items. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link EvenementDetailActivity} representing
+ * lead to a {@link ShiftCategorieActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  * <p/>
  * The activity makes heavy use of fragments. The list of items is a
  * {@link EvenementListFragment} and the item details
- * (if present) is a {@link EvenementDetailFragment}.
+ * (if present) is a {@link ShiftCategorieDetailFragment}.
  * <p/>
  * This activity also implements the required
  * {@link EvenementListFragment.Callbacks} interface
@@ -65,8 +65,8 @@ public class EvenementListActivity extends FragmentActivity
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(EvenementDetailFragment.ARG_ITEM_ID, id);
-            EvenementDetailFragment fragment = new EvenementDetailFragment();
+            arguments.putString(ShiftCategorieDetailFragment.ARG_ITEM_ID, id);
+            ShiftCategorieDetailFragment fragment = new ShiftCategorieDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
@@ -75,8 +75,8 @@ public class EvenementListActivity extends FragmentActivity
         } else {
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
-            Intent detailIntent = new Intent(this, EvenementDetailActivity.class);
-            detailIntent.putExtra(EvenementDetailFragment.ARG_ITEM_ID, id);
+            Intent detailIntent = new Intent(this, ShiftCategorieActivity.class);
+            detailIntent.putExtra(ShiftCategorieDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }

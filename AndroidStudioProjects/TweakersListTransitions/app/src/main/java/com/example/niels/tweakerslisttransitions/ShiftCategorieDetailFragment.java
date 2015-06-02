@@ -1,29 +1,21 @@
 package com.example.niels.tweakerslisttransitions;
 
-import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
-import com.example.niels.tweakerslisttransitions.Evenementen.Shift;
+import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
 
 /**
  * A fragment representing a single Item detail screen.
  * This fragment is either contained in a {@link EvenementListActivity}
- * in two-pane mode (on tablets) or a {@link EvenementDetailActivity}
+ * in two-pane mode (on tablets) or a {@link ShiftCategorieActivity}
  * on handsets.
  */
-public class EvenementDetailFragment extends ListFragment {
+public class ShiftCategorieDetailFragment extends ListFragment {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -39,7 +31,7 @@ public class EvenementDetailFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public EvenementDetailFragment() {
+    public ShiftCategorieDetailFragment() {
     }
 
     @Override
@@ -54,7 +46,7 @@ public class EvenementDetailFragment extends ListFragment {
 
             //git test
 
-            setListAdapter(new ArrayAdapter<Shift>(
+            setListAdapter(new ArrayAdapter<ShiftCategorie>(
                     getActivity(),
                     android.R.layout.simple_list_item_activated_1,
                     android.R.id.text1,

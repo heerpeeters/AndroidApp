@@ -14,9 +14,9 @@ import android.view.MenuItem;
  * in a {@link EvenementListActivity}.
  * <p/>
  * This activity is mostly just a 'shell' activity containing nothing
- * more than a {@link EvenementDetailFragment}.
+ * more than a {@link ShiftCategorieDetailFragment}.
  */
-public class EvenementDetailActivity extends ActionBarActivity {
+public class ShiftCategorieActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,9 @@ public class EvenementDetailActivity extends ActionBarActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(EvenementDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(EvenementDetailFragment.ARG_ITEM_ID));
-            EvenementDetailFragment fragment = new EvenementDetailFragment();
+            arguments.putString(ShiftCategorieDetailFragment.ARG_ITEM_ID,
+                    getIntent().getStringExtra(ShiftCategorieDetailFragment.ARG_ITEM_ID));
+            ShiftCategorieDetailFragment fragment = new ShiftCategorieDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.item_detail_container, fragment)

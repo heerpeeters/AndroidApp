@@ -29,8 +29,11 @@ public class EvenementenData {
         Evenement fluolicious = new Evenement("2", "Fluolicious");
         Evenement stamavond = new Evenement("3", "Gewone Stamavond");
 
-        cocktailavond.getLijst().add(new Shift("20:00", "22:00"));
-        cocktailavond.getLijst().add(new Shift("22:00", "24:00"));
+        cocktailavond.getLijst().add(new ShiftCategorie("1", "Toog"));
+        cocktailavond.getLijst().add(new ShiftCategorie("2", "Inkom"));
+
+        cocktailavond.getById("1").getShiften().add(new Shift("20:00", "22:00"));
+        cocktailavond.getById("1").getShiften().add(new Shift("22:00", "24:00"));
 
         addItem(cocktailavond);
         addItem(fluolicious);

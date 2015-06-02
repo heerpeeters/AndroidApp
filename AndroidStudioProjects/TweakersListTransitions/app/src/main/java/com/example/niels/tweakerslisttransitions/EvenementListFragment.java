@@ -15,7 +15,7 @@ import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
  * A list fragment representing a list of Items. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link EvenementDetailFragment}.
+ * currently being viewed in a {@link ShiftCategorieDetailFragment}.
  * <p/>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.

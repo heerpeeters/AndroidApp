@@ -1,9 +1,12 @@
 package com.example.niels.tweakerslisttransitions.Evenementen;
 
+import android.content.res.Resources;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 /**
  * Created by Niels on 1/06/2015.
@@ -21,15 +24,15 @@ public class Evenement {
     }
 
 
-    public ArrayList<Shift> getLijst() {
+    public ArrayList<ShiftCategorie> getLijst() {
         return lijst;
     }
 
-    public void setLijst(ArrayList<Shift> lijst) {
+    public void setLijst(ArrayList<ShiftCategorie> lijst) {
         this.lijst = lijst;
     }
 
-    private ArrayList<Shift> lijst = new ArrayList<>();
+    private ArrayList<ShiftCategorie> lijst = new ArrayList<>();
 
     public String getNaam() {
         return naam;
@@ -79,5 +82,16 @@ public class Evenement {
 
         return day + "/" + month + "/" + year;
 
+    }
+
+    public ShiftCategorie getById(String id)throws Resources.NotFoundException{
+
+        for(ShiftCategorie sc : getLijst()){
+
+            if(id.compareTo(sc.getId()) == 0)
+                return sc;
+
+        }
+        throw new Resources.NotFoundException("Shiftcategorie niet gevonden");
     }
 }
