@@ -61,6 +61,7 @@ public class Evenement {
 
     private String id;
 
+    //Gebruikt door ArrayAdapter om de tekst voor lijst item weer te geven
     @Override
     public String toString(){
 

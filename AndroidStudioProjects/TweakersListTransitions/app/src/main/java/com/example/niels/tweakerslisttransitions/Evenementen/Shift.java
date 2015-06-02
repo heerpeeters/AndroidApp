@@ -65,4 +65,12 @@ public class Shift {
             throw new Exception("Maximum aantal medewerkers bereikt");
 
     }
+
+    //Wordt gebruikt door arrayadpter voor de tekst voor lijst item
+    @Override
+    public String toString(){
+
+        return getBeginUur() + getEindUur() + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
+
+    }
 }

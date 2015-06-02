@@ -9,6 +9,13 @@ public class ShiftCategorie {
     private String naam;
 
 
+    //Wordt gebruikt door arrayadapter voor de tekst van lijst item
+    @Override
+    public String toString(){
+
+        return naam;
+
+    }
 
 
 }
