@@ -7,6 +7,7 @@ import com.example.niels.tweakerslisttransitions.ShiftCategorieActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -50,8 +51,8 @@ public class EvenementenData {
         stamavond.getById("1").getShiften().add(new Shift("22:00", "24:00", "2"));
 
         try {
-            cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker());
-            cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker());
+            cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker("Rudy"));
+            cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker("Freddy"));
         } catch (Exception e) {
 
         }
@@ -66,6 +67,24 @@ public class EvenementenData {
         ITEM_MAP.put(evenement.getId(), evenement);
     }
 
+    public static Shift getShiftById(String id){
+
+        for(Map.Entry<String, Evenement> entry : ITEM_MAP.entrySet()){
+
+            for(ShiftCategorie sc : entry.getValue().getLijst()){
+
+               for(Shift s : sc.getShiften()){
+
+                   if(id.compareTo(s.getId()) == 0)
+                       return s;
+
+               }
+
+            }
+
+        }
+        return null;
+    }
     /**
      * A dummy item representing a piece of content.
      */

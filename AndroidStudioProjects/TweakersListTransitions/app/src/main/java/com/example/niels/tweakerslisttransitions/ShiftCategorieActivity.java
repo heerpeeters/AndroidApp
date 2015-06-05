@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import com.example.niels.tweakerslisttransitions.Adapters.ShiftCategorieAdapter;
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
 import com.example.niels.tweakerslisttransitions.Evenementen.Shift;
 import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
+import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
 
 
 /**
@@ -32,6 +35,8 @@ public class ShiftCategorieActivity extends ListActivity {
 
     Intent intent;
 
+    private ListView list;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,13 @@ public class ShiftCategorieActivity extends ListActivity {
         mAdapter = new ShiftCategorieAdapter(this);
         for(ShiftCategorie sc : evenement.getLijst()){
             mAdapter.addSectionHeaderItem(sc);
+            /*list = (ListView)findViewById(R.id.text);
+            list.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent detailIntent = new Intent(this, ShiftDetailActivity.class);
+                }
+            });*/
             for(Shift s : sc.getShiften()){
 
                 mAdapter.addItem(s);
@@ -50,6 +62,16 @@ public class ShiftCategorieActivity extends ListActivity {
             }
         }
         setListAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id){
+
+        super.onListItemClick(l, v, position, id);
+        Intent shiftDetailIntent = new Intent(this, ShiftDetailActivity.class);
+        shiftDetailIntent.putExtra("id", mAdapter.getItem(position).getId());
+        startActivity(shiftDetailIntent);
+
     }
 
     @Override

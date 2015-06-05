@@ -1,7 +1,5 @@
 package com.example.niels.tweakerslisttransitions.Adapters;
 
-import java.util.ArrayList;
-import java.util.TreeSet;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,40 +7,46 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
+import com.example.niels.tweakerslisttransitions.Evenementen.Medewerker;
 import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
 import com.example.niels.tweakerslisttransitions.R;
 
-public class ShiftCategorieAdapter extends BaseAdapter {
+import java.util.ArrayList;
+import java.util.TreeSet;
+
+/**
+ * Created by Niels on 5/06/2015.
+ */
+public class MedewerkerAdapter extends BaseAdapter {
 
     //Deze adapter zorgt voor de uitvoer van de lijst met shiftcategories
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
 
-    private ArrayList<iShift> mData = new ArrayList<>();
+    private ArrayList<Medewerker> mData = new ArrayList<>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
 
     private LayoutInflater mInflater;
 
-    public ShiftCategorieAdapter(Context context) {
+    public MedewerkerAdapter(Context context) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public ShiftCategorieAdapter(Context context, ArrayList<iShift> categories) {
+    public MedewerkerAdapter(Context context, ArrayList<Medewerker> categories) {
 
         mData = categories;
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void addItem(final iShift item) {
+    public void addItem(final Medewerker item) {
         mData.add(item);
         notifyDataSetChanged();
     }
 
-    public void addSectionHeaderItem(final iShift item) {
+    public void addSectionHeaderItem(final Medewerker item) {
         mData.add(item);
         sectionHeader.add(mData.size() - 1);
         notifyDataSetChanged();
@@ -64,7 +68,7 @@ public class ShiftCategorieAdapter extends BaseAdapter {
     }
 
     @Override
-    public iShift getItem(int position) {
+    public Medewerker getItem(int position) {
         return mData.get(position);
     }
 
