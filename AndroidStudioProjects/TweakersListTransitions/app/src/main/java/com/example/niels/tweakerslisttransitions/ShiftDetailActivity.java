@@ -1,12 +1,16 @@
 package com.example.niels.tweakerslisttransitions;
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.niels.tweakerslisttransitions.Adapters.MedewerkerAdapter;
 import com.example.niels.tweakerslisttransitions.Adapters.ShiftCategorieAdapter;
@@ -28,18 +32,30 @@ public class ShiftDetailActivity extends ListActivity{
 
     private MedewerkerAdapter mAdapter;
 
+    private Shift s;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         intent = getIntent();
 
-        Shift s = EvenementenData.getShiftById(intent.getStringExtra("id"));
+        s = EvenementenData.getShiftById(intent.getStringExtra("id"));
 
         mAdapter = new MedewerkerAdapter(this);
-        for(Medewerker m : s.getMedewerkers()){
+
+        for (Medewerker m : s.getMedewerkers()) {
             mAdapter.addItem(m);
         }
+        /*
+        if(medewerkers == null) {
+            View emptyView = getLayoutInflater().inflate(R.layout.shift_button, null);
+        }
+        else {
+            for (Medewerker m : s.getMedewerkers()) {
+                mAdapter.addItem(m);
+            }
+        }*/
         setListAdapter(mAdapter);
     }
 
@@ -58,6 +74,40 @@ public class ShiftDetailActivity extends ListActivity{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void voegMedewerkerToe(View v){
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Medewerker toevoegen");
+        alert.setMessage("Zet hier de naam van de medewerker");
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                try {
+                    s.voegMedewerkerToe(new Medewerker(value));
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
     }
 }
 

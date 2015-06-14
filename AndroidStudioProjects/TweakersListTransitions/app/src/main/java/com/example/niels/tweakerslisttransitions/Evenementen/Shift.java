@@ -69,10 +69,16 @@ public class Shift implements iShift{
     //indien het aantal medewerkers nog niet bereikt is, voeg medewerker toe. Anders gooi exception
     public void voegMedewerkerToe(Medewerker medewerker) throws Exception {
 
-        if(getMedewerkers().size() < getAantalMedewerkersNodig())
+        if(!(isMaximumAantalMedewerkersBereikt()))
             getMedewerkers().add(medewerker);
         else
             throw new Exception("Maximum aantal medewerkers bereikt");
+
+    }
+
+    public boolean isMaximumAantalMedewerkersBereikt(){
+
+        return getMedewerkers().size() >= getAantalMedewerkersNodig();
 
     }
 

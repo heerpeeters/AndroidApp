@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.niels.tweakerslisttransitions.Evenementen.Medewerker;
@@ -85,8 +86,15 @@ public class MedewerkerAdapter extends BaseAdapter {
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
+                    if((mData.size() - 1) == position){
+                        convertView = mInflater.inflate(R.layout.shift_detail, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.text);
+                        holder.button = (Button) convertView.findViewById(R.id.row_add_button);
+                        holder.button.setText("+");
+                    }
+                    else{
                     convertView = mInflater.inflate(R.layout.snippet_item1, null);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
+                    holder.textView = (TextView) convertView.findViewById(R.id.text);}
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.snippet_item2, null);
@@ -104,6 +112,9 @@ public class MedewerkerAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         public TextView textView;
+        public Button button;
     }
+
+
 
 }

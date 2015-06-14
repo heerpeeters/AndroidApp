@@ -68,6 +68,11 @@ public class ShiftCategorieActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id){
 
         super.onListItemClick(l, v, position, id);
+
+        //Als het item een shiftcategorie is, doe dan niets
+        if(mAdapter.getItem(position) instanceof ShiftCategorie)
+            return;
+
         Intent shiftDetailIntent = new Intent(this, ShiftDetailActivity.class);
         shiftDetailIntent.putExtra("id", mAdapter.getItem(position).getId());
         startActivity(shiftDetailIntent);
