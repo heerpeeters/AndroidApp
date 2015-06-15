@@ -25,6 +25,8 @@ public class MedewerkerAdapter extends BaseAdapter {
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
 
+    private int maxMedewerkers;
+
     private ArrayList<Medewerker> mData = new ArrayList<>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
 
@@ -40,6 +42,12 @@ public class MedewerkerAdapter extends BaseAdapter {
         mData = categories;
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void clearData(){
+
+        mData = new ArrayList<>();
+
     }
 
     public void addItem(final Medewerker item) {
@@ -78,6 +86,14 @@ public class MedewerkerAdapter extends BaseAdapter {
         return position;
     }
 
+    public int getMaxMedewerkers() {
+        return maxMedewerkers;
+    }
+
+    public void setMaxMedewerkers(int maxMedewerkers) {
+        this.maxMedewerkers = maxMedewerkers;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
@@ -86,7 +102,7 @@ public class MedewerkerAdapter extends BaseAdapter {
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
-                    if((mData.size() - 1) == position){
+                    if((mData.size() - 1) == position && mData.size() < maxMedewerkers){
                         convertView = mInflater.inflate(R.layout.shift_detail, null);
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                         holder.button = (Button) convertView.findViewById(R.id.row_add_button);

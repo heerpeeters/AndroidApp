@@ -28,8 +28,6 @@ public class ShiftDetailActivity extends ListActivity{
 
     private Intent intent;
 
-    private List medewerkers;
-
     private MedewerkerAdapter mAdapter;
 
     private Shift s;
@@ -38,24 +36,20 @@ public class ShiftDetailActivity extends ListActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.lijst);
+
         intent = getIntent();
 
         s = EvenementenData.getShiftById(intent.getStringExtra("id"));
 
         mAdapter = new MedewerkerAdapter(this);
 
+        mAdapter.setMaxMedewerkers(s.getAantalMedewerkersNodig());
+
         for (Medewerker m : s.getMedewerkers()) {
             mAdapter.addItem(m);
         }
-        /*
-        if(medewerkers == null) {
-            View emptyView = getLayoutInflater().inflate(R.layout.shift_button, null);
-        }
-        else {
-            for (Medewerker m : s.getMedewerkers()) {
-                mAdapter.addItem(m);
-            }
-        }*/
+
         setListAdapter(mAdapter);
     }
 
@@ -78,6 +72,8 @@ public class ShiftDetailActivity extends ListActivity{
 
     public void voegMedewerkerToe(View v){
 
+        final View view = v;
+
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Medewerker toevoegen");
@@ -92,6 +88,13 @@ public class ShiftDetailActivity extends ListActivity{
                 String value = input.getText().toString();
                 try {
                     s.voegMedewerkerToe(new Medewerker(value));
+                    mAdapter.clearData();
+                    for(Medewerker m : s.getMedewerkers()){
+
+                        mAdapter.addItem(m);
+
+                    }
+                    mAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
                     toast.show();
@@ -107,6 +110,8 @@ public class ShiftDetailActivity extends ListActivity{
         });
 
         alert.show();
+
+        mAdapter.notifyDataSetChanged();
 
     }
 }

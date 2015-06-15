@@ -53,6 +53,7 @@ public class EvenementenData {
         try {
             cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker("Rudy"));
             cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker("Freddy"));
+            //cocktailavond.getById("1").getShiftById("2").voegMedewerkerToe(new Medewerker("Tom"));
         } catch (Exception e) {
 
         }
