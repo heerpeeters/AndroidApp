@@ -46,21 +46,7 @@ public class ShiftCategorieActivity extends ListActivity {
         evenement = EvenementenData.ITEM_MAP.get(intent.getStringExtra("id"));
 
         mAdapter = new ShiftCategorieAdapter(this);
-        for(ShiftCategorie sc : evenement.getLijst()){
-            mAdapter.addSectionHeaderItem(sc);
-            /*list = (ListView)findViewById(R.id.text);
-            list.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent detailIntent = new Intent(this, ShiftDetailActivity.class);
-                }
-            });*/
-            for(Shift s : sc.getShiften()){
-
-                mAdapter.addItem(s);
-
-            }
-        }
+        loadData();
         setListAdapter(mAdapter);
     }
 
@@ -79,6 +65,20 @@ public class ShiftCategorieActivity extends ListActivity {
 
     }
 
+    private void loadData(){
+
+        for(ShiftCategorie sc : evenement.getLijst()){
+            mAdapter.addSectionHeaderItem(sc);
+
+            for(Shift s : sc.getShiften()){
+
+                mAdapter.addItem(s);
+
+            }
+        }
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -94,5 +94,15 @@ public class ShiftCategorieActivity extends ListActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume(){
+
+        super.onResume();
+        mAdapter.clearData();
+        loadData();
+        mAdapter.notifyDataSetChanged();
+
     }
 }

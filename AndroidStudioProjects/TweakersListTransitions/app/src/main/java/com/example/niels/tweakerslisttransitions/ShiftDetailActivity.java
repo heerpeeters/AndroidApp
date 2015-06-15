@@ -111,7 +111,7 @@ public class ShiftDetailActivity extends ListActivity{
 
         alert.show();
 
-        mAdapter.notifyDataSetChanged();
+
 
     }
 }

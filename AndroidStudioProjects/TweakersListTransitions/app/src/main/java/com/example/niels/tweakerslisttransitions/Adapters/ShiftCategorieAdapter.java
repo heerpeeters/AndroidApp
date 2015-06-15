@@ -73,6 +73,12 @@ public class ShiftCategorieAdapter extends BaseAdapter {
         return position;
     }
 
+    public void clearData(){
+
+        mData = new ArrayList<>();
+
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
