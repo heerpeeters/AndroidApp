@@ -107,10 +107,15 @@ public class MedewerkerAdapter extends BaseAdapter {
                         holder.textView = (TextView) convertView.findViewById(R.id.text);
                         holder.button = (Button) convertView.findViewById(R.id.row_add_button);
                         holder.button.setText("+");
+                        holder.deleteButton = (Button) convertView.findViewById(R.id.row_delete_button);
+                        holder.deleteButton.setTag(position);
                     }
                     else{
-                    convertView = mInflater.inflate(R.layout.snippet_item1, null);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);}
+                        convertView = mInflater.inflate(R.layout.shift_full, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.text);
+                        holder.deleteButton = (Button) convertView.findViewById(R.id.row_delete_button);
+                        holder.deleteButton.setTag(position);
+                    }
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.snippet_item2, null);
@@ -129,6 +134,7 @@ public class MedewerkerAdapter extends BaseAdapter {
     public static class ViewHolder {
         public TextView textView;
         public Button button;
+        public Button deleteButton;
     }
 
 

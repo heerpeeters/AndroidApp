@@ -8,9 +8,11 @@
         android:layout_height="wrap_content"
         android:background="#FFF"
         android:gravity="center_vertical"
-        android:padding="5dp"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FF000000" />
+        android:textColor="#FF000000"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/row_add_button"
@@ -20,11 +22,22 @@
         android:textColor="#FF000000"
         android:onClick="voegMedewerkerToe"
         android:layout_below="@+id/text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:onClick="verwijderMedewerker"
+        android:id="@+id/row_delete_button"
+        android:layout_alignBottom="@+id/text"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        android:layout_alignTop="@+id/text" />
 
 
 </RelativeLayout>

@@ -70,6 +70,20 @@ public class ShiftDetailActivity extends ListActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    //use this method when adding or deleting content
+    public void reloadData(){
+
+        mAdapter.clearData();
+        for(Medewerker m : s.getMedewerkers()){
+
+            mAdapter.addItem(m);
+
+        }
+        mAdapter.notifyDataSetChanged();
+        setListAdapter(mAdapter);
+
+    }
+
     public void voegMedewerkerToe(View v){
 
         final View view = v;
@@ -88,12 +102,7 @@ public class ShiftDetailActivity extends ListActivity{
                 String value = input.getText().toString();
                 try {
                     s.voegMedewerkerToe(new Medewerker(value));
-                    mAdapter.clearData();
-                    for(Medewerker m : s.getMedewerkers()){
-
-                        mAdapter.addItem(m);
-
-                    }
+                    reloadData();
                     mAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
@@ -112,6 +121,13 @@ public class ShiftDetailActivity extends ListActivity{
         alert.show();
 
 
+
+    }
+
+    public void verwijderMedewerker(View v){
+
+        s.verwijderMedewerker((Integer) v.getTag());
+        reloadData();
 
     }
 }

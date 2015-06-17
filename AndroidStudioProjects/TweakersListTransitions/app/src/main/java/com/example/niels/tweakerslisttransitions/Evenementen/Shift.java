@@ -82,6 +82,13 @@ public class Shift implements iShift{
 
     }
 
+    //methode om medewerker te verwijderen uit lijst met medewerkers
+    public void verwijderMedewerker(int positie){
+
+        getMedewerkers().remove(positie);
+
+    }
+
     //Wordt gebruikt door arrayadpter voor de tekst voor lijst item
     @Override
     public String toString(){
