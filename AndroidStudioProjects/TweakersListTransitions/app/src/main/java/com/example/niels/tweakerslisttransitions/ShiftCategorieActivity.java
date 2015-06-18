@@ -1,19 +1,26 @@
 package com.example.niels.tweakerslisttransitions;
 
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.niels.tweakerslisttransitions.Adapters.ShiftCategorieAdapter;
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
+import com.example.niels.tweakerslisttransitions.Evenementen.Medewerker;
 import com.example.niels.tweakerslisttransitions.Evenementen.Shift;
 import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
 import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
+
+import java.util.ArrayList;
 
 
 /**
@@ -41,12 +48,16 @@ public class ShiftCategorieActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.lijst);
+
         intent = getIntent();
 
-        evenement = EvenementenData.ITEM_MAP.get(intent.getStringExtra("id"));
+        evenement = EvenementenData.ITEM_MAP.get(intent.getStringExtra("id"));;
 
         mAdapter = new ShiftCategorieAdapter(this);
+
         loadData();
+
         setListAdapter(mAdapter);
     }
 
@@ -103,6 +114,64 @@ public class ShiftCategorieActivity extends ListActivity {
         mAdapter.clearData();
         loadData();
         mAdapter.notifyDataSetChanged();
+
+    }
+
+    //this method reloads data to show new contents of list when things are changed
+    private void reloadData(){
+
+        mAdapter.clearData();
+        for(ShiftCategorie sc : evenement.getLijst()){
+
+            mAdapter.addSectionHeaderItem(sc);
+            for(Shift s : sc.getShiften()){
+
+                mAdapter.addItem(s);
+
+            }
+
+        }
+        mAdapter.notifyDataSetChanged();
+        setListAdapter(mAdapter);
+    }
+
+    public void voegShiftCategorieToe(View v){
+
+        final View view = v;
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Shiftcategorie toevoegen");
+        alert.setMessage("Zet hier de naam van de shiftcategorie");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                try {
+                    evenement.voegShiftCategorieToe(new ShiftCategorie(Integer.toString(evenement.getLijst().size()), value));
+                    reloadData();
+                    mAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
+
 
     }
 }

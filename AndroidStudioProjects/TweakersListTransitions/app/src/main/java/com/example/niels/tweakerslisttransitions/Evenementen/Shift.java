@@ -17,7 +17,7 @@ public class Shift implements iShift{
     private List<Medewerker> medewerkers;
 
     //Het aantal medewerkers nodig voor de shift
-    private int aantalMedewerkersNodig = 2;
+    private int aantalMedewerkersNodig = 3;
 
     public Shift(String start, String einde, String id){
 

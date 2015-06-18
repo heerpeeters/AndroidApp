@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
 import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
 import com.example.niels.tweakerslisttransitions.R;
 
@@ -87,12 +87,31 @@ public class ShiftCategorieAdapter extends BaseAdapter {
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
-                    convertView = mInflater.inflate(R.layout.snippet_item1, null);
-                    holder.textView = (TextView) convertView.findViewById(R.id.text);
+                    //when the item is the last in the list, add an add button
+                    if((mData.size() - 1) == position){
+                        convertView = mInflater.inflate(R.layout.shift_category_add_button, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.text);
+                        holder.button = (Button) convertView.findViewById(R.id.row_add_button);
+                        holder.button.setText("+");
+                    }
+                    //if not, display as snippet_item1
+                    else{
+                        convertView = mInflater.inflate(R.layout.snippet_item1, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.text);}
+
                     break;
                 case TYPE_SEPARATOR:
-                    convertView = mInflater.inflate(R.layout.snippet_item2, null);
-                    holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                    //when the shiftcategory is the last in the list, add an add button
+                    if((mData.size() - 1) == position){
+                        convertView = mInflater.inflate(R.layout.shift_category_shift_add_button, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                        holder.button = (Button) convertView.findViewById(R.id.row_add_button);
+                        holder.button.setText("+");
+                    }
+                    else {
+                        convertView = mInflater.inflate(R.layout.snippet_item2, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                    }
                     break;
             }
             convertView.setTag(holder);
@@ -101,11 +120,13 @@ public class ShiftCategorieAdapter extends BaseAdapter {
         }
         holder.textView.setText(mData.get(position).toString());
 
+
         return convertView;
     }
 
     public static class ViewHolder {
         public TextView textView;
+        public Button button;
     }
 
 }

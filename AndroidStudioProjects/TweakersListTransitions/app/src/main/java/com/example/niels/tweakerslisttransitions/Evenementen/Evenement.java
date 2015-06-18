@@ -97,4 +97,10 @@ public class Evenement {
         }
         throw new Resources.NotFoundException("Shiftcategorie niet gevonden");
     }
+
+    public void voegShiftCategorieToe(ShiftCategorie sc) {
+
+        getLijst().add(sc);
+
+    }
 }
