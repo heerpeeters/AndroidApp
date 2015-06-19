@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
@@ -75,6 +76,12 @@ public class EvenementAdapter extends BaseAdapter {
         return position;
     }
 
+    public void clearData(){
+
+        mData = new ArrayList<>();
+
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
@@ -87,8 +94,16 @@ public class EvenementAdapter extends BaseAdapter {
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     break;
                 case TYPE_SEPARATOR:
-                    convertView = mInflater.inflate(R.layout.snippet_item2, null);
-                    holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                    if((mData.size() - 1) == position) {
+                        convertView = mInflater.inflate(R.layout.event_add_button, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                        holder.addButton = (Button) convertView.findViewById(R.id.row_add_button);
+                        holder.addButton.setText("+");
+                    }
+                    else{
+                        convertView = mInflater.inflate(R.layout.snippet_item2, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                    }
                     break;
             }
             convertView.setTag(holder);
@@ -102,6 +117,7 @@ public class EvenementAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         public TextView textView;
+        public Button addButton;
     }
 
 }

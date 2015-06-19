@@ -1,8 +1,21 @@
 package com.example.niels.tweakerslisttransitions;
 
+import android.app.DialogFragment;
+import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.niels.tweakerslisttransitions.Adapters.EvenementAdapter;
+import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
+import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
+
+import java.util.List;
 
 
 /**
@@ -21,8 +34,7 @@ import android.support.v4.app.FragmentActivity;
  * {@link EvenementListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class EvenementListActivity extends FragmentActivity
-        implements EvenementListFragment.Callbacks {
+public class EvenementListActivity extends ListActivity {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -30,11 +42,20 @@ public class EvenementListActivity extends FragmentActivity
      */
     private boolean mTwoPane;
 
+    private EvenementAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_list);
 
+        setContentView(R.layout.lijst);
+
+        mAdapter = new EvenementAdapter(this);
+
+        loadData();
+
+        setListAdapter(mAdapter);
+        /*
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -48,7 +69,7 @@ public class EvenementListActivity extends FragmentActivity
                     .findFragmentById(R.id.item_list))
                     .setActivateOnItemClick(true);
         }
-
+        */
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
@@ -56,7 +77,7 @@ public class EvenementListActivity extends FragmentActivity
      * Callback method from {@link EvenementListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
      */
-    @Override
+    /*@Override
     public void onItemSelected(String id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
@@ -79,5 +100,88 @@ public class EvenementListActivity extends FragmentActivity
             detailIntent.putExtra(ShiftCategorieDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+    }*/
+
+    @Override
+    protected void onResume(){
+
+        super.onResume();
+        mAdapter.clearData();
+        loadData();
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id){
+
+        super.onListItemClick(l, v, position, id);
+
+        //Als het item een shiftcategorie is, doe dan niets
+        Intent shiftCategoryIntent = new Intent(this, ShiftCategorieActivity.class);
+        shiftCategoryIntent.putExtra("id", mAdapter.getItem(position).getId());
+        startActivity(shiftCategoryIntent);
+
+    }
+
+    private void loadData() {
+
+        for(Evenement event : EvenementenData.ITEMS)
+            mAdapter.addSectionHeaderItem(event);
+
+    }
+    private void reloadData(){
+
+        mAdapter.clearData();
+        loadData();
+        mAdapter.notifyDataSetChanged();
+        setListAdapter(mAdapter);
+    }
+
+    public void voegEvenementToe(View v){
+
+        final View view = v;
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Evenement toevoegen");
+        alert.setMessage("Zet hier de naam van het evenement. Vervolgens zal u de datum van het evenement moeten kiezen");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                try {
+                    List<Evenement> evenementen = EvenementenData.ITEMS;
+                    int id = Integer.parseInt(evenementen.get(evenementen.size() - 1).getId()) + 1;
+                    evenementen.add(new Evenement(Integer.toString(id), value));
+                    reloadData();
+                    mAdapter.notifyDataSetChanged();
+                    DatePickerFragment newFragment = new DatePickerFragment();
+                    newFragment.setId(id);
+                    newFragment.show(getFragmentManager(), "Dag kiezen");
+                    reloadData();
+                    mAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Canceled.
+            }
+        });
+
+        alert.show();
+
+
+
     }
 }

@@ -17,7 +17,7 @@ public class Evenement {
 
         setId(id);
         setNaam(naam);
-        Calendar c = new GregorianCalendar();
+        Calendar c = Calendar.getInstance();
 
         setDatum(c.getTime());
 
@@ -78,7 +78,7 @@ public class Evenement {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        int month = cal.get(Calendar.MONTH);
+        int month = cal.get(Calendar.MONTH)+1;
         int year = cal.get(Calendar.YEAR);
 
         return day + "/" + month + "/" + year;
