@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.DatePicker;
@@ -23,6 +25,8 @@ public class DatePickerFragment extends DialogFragment
     //this is to communicate id of newly created event
     private int id;
 
+    private Calendar kalender;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
@@ -37,12 +41,23 @@ public class DatePickerFragment extends DialogFragment
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        final Calendar kalender = Calendar.getInstance();
+        kalender = Calendar.getInstance();
         kalender.set(year, monthOfYear, dayOfMonth);
         EvenementenData.ITEMS.get(id-1).setDatum(kalender.getTime());
+        //use this to reload the date right after event has been created.
+        ((EvenementListActivity)getActivity()).reloadData();
+        dismiss();
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Calendar getKalender() {
+        return kalender;
+    }
+
+    public void setKalender(Calendar kalender) {
+        this.kalender = kalender;
     }
 }

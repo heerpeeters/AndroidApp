@@ -137,7 +137,7 @@ public class EvenementListActivity extends ListActivity {
             mAdapter.addSectionHeaderItem(event);
 
     }
-    private void reloadData(){
+    public void reloadData(){
 
         mAdapter.clearData();
         loadData();
@@ -187,8 +187,6 @@ public class EvenementListActivity extends ListActivity {
         });
 
         alert.show();
-
-
 
     }
 }
