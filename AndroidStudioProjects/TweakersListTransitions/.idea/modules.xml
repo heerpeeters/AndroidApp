@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ShiftApp.iml" filepath="$PROJECT_DIR$/ShiftApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TweakersListTransitions.iml" filepath="$PROJECT_DIR$/TweakersListTransitions.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

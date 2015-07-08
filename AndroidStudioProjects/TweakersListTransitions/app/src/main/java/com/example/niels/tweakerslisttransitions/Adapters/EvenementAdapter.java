@@ -94,16 +94,16 @@ public class EvenementAdapter extends BaseAdapter {
                     holder.textView = (TextView) convertView.findViewById(R.id.text);
                     break;
                 case TYPE_SEPARATOR:
-                    if((mData.size() - 1) == position) {
+                    /*if((mData.size() - 1) == position) {
                         convertView = mInflater.inflate(R.layout.event_add_button, null);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
                         holder.addButton = (Button) convertView.findViewById(R.id.row_add_button);
                         holder.addButton.setText("+");
                     }
-                    else{
+                    else{*/
                         convertView = mInflater.inflate(R.layout.snippet_item2, null);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-                    }
+                    //}
                     break;
             }
             convertView.setTag(holder);

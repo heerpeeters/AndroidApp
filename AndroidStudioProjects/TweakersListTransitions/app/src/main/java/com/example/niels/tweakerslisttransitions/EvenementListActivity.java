@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -48,7 +50,13 @@ public class EvenementListActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.event_add_button, null);
+
         setContentView(R.layout.lijst);
+
+        getListView().addFooterView(v);
 
         mAdapter = new EvenementAdapter(this);
 
@@ -117,7 +125,6 @@ public class EvenementListActivity extends ListActivity {
 
         super.onListItemClick(l, v, position, id);
 
-        //Als het item een shiftcategorie is, doe dan niets
         Intent shiftCategoryIntent = new Intent(this, ShiftCategorieActivity.class);
         shiftCategoryIntent.putExtra("id", mAdapter.getItem(position).getId());
         startActivity(shiftCategoryIntent);
