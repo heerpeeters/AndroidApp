@@ -4,22 +4,12 @@
     android:layout_height="wrap_content"
     >
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:gravity="center_vertical"
-        android:padding="5dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FF000000" />
-
     <Button
         android:id="@+id/row_add_button"
         android:layout_width="137dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Add"
+        android:text="+"
         android:textColor="#FFFFFFFF"
         android:background="#2F2F2F"
         android:onClick="voegShiftCategorieToe"
