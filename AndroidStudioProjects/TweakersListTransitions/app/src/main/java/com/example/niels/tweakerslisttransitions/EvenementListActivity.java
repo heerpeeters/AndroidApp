@@ -18,6 +18,7 @@ import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -133,8 +134,10 @@ public class EvenementListActivity extends ListActivity {
 
     private void loadData() {
 
-        for(Evenement event : EvenementenData.ITEMS)
-            mAdapter.addSectionHeaderItem(event);
+        EvenementenData.orderEventsByDate();
+
+        for(Map.Entry<String, Evenement> event: EvenementenData.ITEM_MAP.entrySet())
+            mAdapter.addSectionHeaderItem(event.getValue());
 
     }
     public void reloadData(){
@@ -162,9 +165,9 @@ public class EvenementListActivity extends ListActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 try {
-                    List<Evenement> evenementen = EvenementenData.ITEMS;
-                    int id = Integer.parseInt(evenementen.get(evenementen.size() - 1).getId()) + 1;
-                    evenementen.add(new Evenement(Integer.toString(id), value));
+                    Map<String, Evenement> evenementen = EvenementenData.ITEM_MAP;
+                    int id = Integer.parseInt(evenementen.get(Integer.toString(evenementen.size())).getId()) + 1;
+                    EvenementenData.ITEM_MAP.put(Integer.toString(id), new Evenement(Integer.toString(id), value));
                     reloadData();
                     mAdapter.notifyDataSetChanged();
                     DatePickerFragment newFragment = new DatePickerFragment();

@@ -13,13 +13,13 @@ public class ShiftCategorie implements iShift {
     //naam van de categorie, zoals 'toog' of 'inkom'
     private String naam, id;
 
-    private ArrayList<Shift> shiften = new ArrayList<>();
+    private ArrayList<Shift> shiften;
 
     public ShiftCategorie(String id, String naam){
 
         setId(id);
         setNaam(naam);
-
+        shiften = new ArrayList<>();
     }
 
     public String getNaam() {

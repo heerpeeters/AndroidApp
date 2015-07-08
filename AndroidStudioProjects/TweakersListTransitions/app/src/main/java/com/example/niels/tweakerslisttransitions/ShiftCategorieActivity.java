@@ -21,6 +21,8 @@ import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
 import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -48,7 +50,7 @@ public class ShiftCategorieActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.lijst);
+        setContentView(R.layout.shiftcategory_list);
 
         intent = getIntent();
 
@@ -56,9 +58,13 @@ public class ShiftCategorieActivity extends ListActivity {
 
         mAdapter = new ShiftCategorieAdapter(this);
 
+        if(evenement.getLijst() == null || evenement.getLijst().isEmpty())
+            return;
+        else{
+
         loadData();
 
-        setListAdapter(mAdapter);
+        setListAdapter(mAdapter);}
     }
 
     @Override
@@ -77,6 +83,7 @@ public class ShiftCategorieActivity extends ListActivity {
     }
 
     private void loadData(){
+
 
         for(ShiftCategorie sc : evenement.getLijst()){
             mAdapter.addSectionHeaderItem(sc);

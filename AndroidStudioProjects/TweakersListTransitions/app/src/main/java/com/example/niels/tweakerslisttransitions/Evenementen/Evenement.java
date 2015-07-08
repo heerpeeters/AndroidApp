@@ -21,6 +21,8 @@ public class Evenement {
 
         setDatum(c.getTime());
 
+        lijst = new ArrayList<>();
+
     }
 
 
@@ -32,7 +34,7 @@ public class Evenement {
         this.lijst = lijst;
     }
 
-    private ArrayList<ShiftCategorie> lijst = new ArrayList<>();
+    private ArrayList<ShiftCategorie> lijst;
 
     public String getNaam() {
         return naam;

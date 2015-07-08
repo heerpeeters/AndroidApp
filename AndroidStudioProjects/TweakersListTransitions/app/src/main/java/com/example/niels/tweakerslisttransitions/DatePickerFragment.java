@@ -43,7 +43,8 @@ public class DatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         kalender = Calendar.getInstance();
         kalender.set(year, monthOfYear, dayOfMonth);
-        EvenementenData.ITEMS.get(id-1).setDatum(kalender.getTime());
+        EvenementenData.ITEM_MAP.get(Integer.toString(id)).setDatum(kalender.getTime());
+        EvenementenData.orderEventsByDate();
         //use this to reload the date right after event has been created.
         ((EvenementListActivity)getActivity()).reloadData();
         dismiss();
@@ -53,11 +54,4 @@ public class DatePickerFragment extends DialogFragment
         this.id = id;
     }
 
-    public Calendar getKalender() {
-        return kalender;
-    }
-
-    public void setKalender(Calendar kalender) {
-        this.kalender = kalender;
-    }
 }

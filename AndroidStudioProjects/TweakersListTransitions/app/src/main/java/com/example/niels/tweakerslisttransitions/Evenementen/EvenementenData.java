@@ -6,8 +6,11 @@ import android.widget.Toast;
 import com.example.niels.tweakerslisttransitions.ShiftCategorieActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,8 +89,32 @@ public class EvenementenData {
         }
         return null;
     }
-    /**
-     * A dummy item representing a piece of content.
-     */
+
+    public static void orderEventsByDate(){
+
+        //converting map to linkedlist
+        List<Evenement> list = new LinkedList(ITEM_MAP.values());
+        //ordering events by date
+        Collections.sort(list, new Comparator<Evenement>(){
+
+            public int compare(Evenement e1, Evenement e2){
+
+                return e2.getDatum().compareTo(e1.getDatum());
+
+            }
+
+        });
+
+        Map<String, Evenement> newMap = new HashMap<>();
+
+        for(Evenement e: list){
+
+            newMap.put(e.getId(), e);
+
+        }
+
+        ITEM_MAP = newMap;
+
+    }
 
 }
