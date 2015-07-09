@@ -71,8 +71,18 @@ public class EvenementenData {
         ITEM_MAP.put(evenement.getId(), evenement);
     }
 
-    public static Shift getShiftById(String id){
+    public static Shift getShiftById(String eventId, String id){
 
+        Evenement event = ITEM_MAP.get(eventId);
+
+        for(ShiftCategorie sc : event.getLijst()){
+
+            return sc.getShiftById(id);
+
+        }
+        return null;
+
+        /*
         for(Map.Entry<String, Evenement> entry : ITEM_MAP.entrySet()){
 
             for(ShiftCategorie sc : entry.getValue().getLijst()){
@@ -87,7 +97,7 @@ public class EvenementenData {
             }
 
         }
-        return null;
+        return null;*/
     }
 
     public static void orderEventsByDate(){
