@@ -85,6 +85,7 @@ public class ShiftCategorieActivity extends ListActivity {
 
         Intent shiftDetailIntent = new Intent(this, ShiftDetailActivity.class);
         shiftDetailIntent.putExtra("id", mAdapter.getItem(position).getId());
+        shiftDetailIntent.putExtra("eventId", evenement.getId());
         startActivity(shiftDetailIntent);
 
     }
@@ -128,6 +129,7 @@ public class ShiftCategorieActivity extends ListActivity {
         mAdapter.clearData();
         loadData();
         mAdapter.notifyDataSetChanged();
+        setListAdapter(mAdapter);
 
     }
 

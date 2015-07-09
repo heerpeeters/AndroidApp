@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.niels.tweakerslisttransitions.Evenementen.Shift;
 import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
 import com.example.niels.tweakerslisttransitions.R;
 
@@ -88,8 +89,16 @@ public class ShiftCategorieAdapter extends BaseAdapter {
             switch (rowType) {
                 case TYPE_ITEM:
 
-                        convertView = mInflater.inflate(R.layout.snippet_item1, null);
-                        holder.textView = (TextView) convertView.findViewById(R.id.text);
+                        if(!((Shift)getItem(position)).isMaximumAantalMedewerkersBereikt()) {
+                            convertView = mInflater.inflate(R.layout.shift_red, null);
+                            holder.textView = (TextView) convertView.findViewById(R.id.text);
+                        }
+                        else{
+
+                            convertView = mInflater.inflate(R.layout.shift_green, null);
+                            holder.textView = (TextView) convertView.findViewById(R.id.text);
+
+                        }
                     break;
 
                 case TYPE_SEPARATOR:
