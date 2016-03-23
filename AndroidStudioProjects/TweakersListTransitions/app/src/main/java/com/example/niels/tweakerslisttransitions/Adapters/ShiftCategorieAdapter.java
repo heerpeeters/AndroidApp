@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.niels.tweakerslisttransitions.Evenementen.Shift;
+import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
 import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
 import com.example.niels.tweakerslisttransitions.R;
 
@@ -80,6 +81,16 @@ public class ShiftCategorieAdapter extends BaseAdapter {
 
     }
 
+    //This method checks if the next item in the list is a shift category or a shiftcategory
+    public boolean insertAddShiftButton(int position)
+    {
+        if(mData.size() == position + 1)
+            return true;
+
+        return mData.size() > position + 1 && mData.get(position + 1) instanceof ShiftCategorie;
+
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
@@ -89,14 +100,37 @@ public class ShiftCategorieAdapter extends BaseAdapter {
             switch (rowType) {
                 case TYPE_ITEM:
 
-                        if(!((Shift)getItem(position)).isMaximumAantalMedewerkersBereikt()) {
-                            convertView = mInflater.inflate(R.layout.shift_red, null);
-                            holder.textView = (TextView) convertView.findViewById(R.id.text);
+                        if(!((Shift)getItem(position)).isMaximumAantalMedewerkersBereikt())
+                        {
+
+                            if(insertAddShiftButton(position))
+                            {
+                                convertView = mInflater.inflate(R.layout.shift_red_add_button, null);
+                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                                holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
+                            }
+                            else
+                            {
+                                convertView = mInflater.inflate(R.layout.shift_red, null);
+                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                            }
+
                         }
                         else{
 
-                            convertView = mInflater.inflate(R.layout.shift_green, null);
-                            holder.textView = (TextView) convertView.findViewById(R.id.text);
+                            if(insertAddShiftButton(position))
+                            {
+
+                                convertView = mInflater.inflate(R.layout.shift_green_add_button, null);
+                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                                holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
+
+                            }
+                            else
+                            {
+                                convertView = mInflater.inflate(R.layout.shift_green, null);
+                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                            }
 
                         }
                     break;
@@ -120,6 +154,7 @@ public class ShiftCategorieAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         public TextView textView;
+        public Button addShiftButton;
     }
 
 }

@@ -43,8 +43,6 @@ public class ShiftCategorieActivity extends ListActivity {
 
     private Evenement evenement;
 
-    private Object object;
-
     Intent intent;
 
     private ListView list;
@@ -69,11 +67,14 @@ public class ShiftCategorieActivity extends ListActivity {
 
         if(evenement.getLijst() == null || evenement.getLijst().isEmpty())
             return;
-        else{
+        else
+        {
 
         loadData();
 
-        setListAdapter(mAdapter);}
+        setListAdapter(mAdapter);
+            
+        }
     }
 
     @Override
