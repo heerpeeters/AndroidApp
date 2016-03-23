@@ -1,5 +1,6 @@
 package com.example.niels.tweakerslisttransitions;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
