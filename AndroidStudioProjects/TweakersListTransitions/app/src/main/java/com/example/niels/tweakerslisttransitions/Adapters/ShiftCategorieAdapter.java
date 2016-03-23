@@ -84,6 +84,8 @@ public class ShiftCategorieAdapter extends BaseAdapter {
     //This method checks if the next item in the list is a shift category or a shiftcategory
     public boolean insertAddShiftButton(int position)
     {
+
+
         if(mData.size() == position + 1)
             return true;
 
@@ -137,9 +139,17 @@ public class ShiftCategorieAdapter extends BaseAdapter {
 
                 case TYPE_SEPARATOR:
                     //when the shiftcategory is the last in the list, add an add button
+                    if(mData.size() == position + 1)
+                    {
+                        convertView = mInflater.inflate(R.layout.shift_category_add_shift_button, null);
+                        holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                        holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
+
+                    }
+                    else {
                         convertView = mInflater.inflate(R.layout.snippet_item2, null);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
-
+                    }
                     break;
             }
             convertView.setTag(holder);
