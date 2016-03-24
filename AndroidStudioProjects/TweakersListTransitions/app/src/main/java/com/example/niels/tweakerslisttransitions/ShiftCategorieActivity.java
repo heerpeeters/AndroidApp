@@ -1,7 +1,9 @@
 package com.example.niels.tweakerslisttransitions;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.ListActivity;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +23,9 @@ import com.example.niels.tweakerslisttransitions.Evenementen.Medewerker;
 import com.example.niels.tweakerslisttransitions.Evenementen.Shift;
 import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
 import com.example.niels.tweakerslisttransitions.Evenementen.iShift;
+import com.example.niels.tweakerslisttransitions.Fragments.TimePickerFragment;
+import android.app.DialogFragment;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,7 +79,7 @@ public class ShiftCategorieActivity extends ListActivity {
         loadData();
 
         setListAdapter(mAdapter);
-            
+
         }
     }
 
@@ -194,4 +199,16 @@ public class ShiftCategorieActivity extends ListActivity {
 
 
     }
+
+    public void voegShiftToe(View v)
+    {
+
+        final View view = v;
+
+        TimePickerFragment timePicker = new TimePickerFragment();
+        timePicker.setTitle("Beginuur");
+        timePicker.show(this.getFragmentManager(), "Beginuur");
+
+    }
+
 }

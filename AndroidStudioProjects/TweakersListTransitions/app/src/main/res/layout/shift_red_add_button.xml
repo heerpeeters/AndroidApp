@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Add Shift"
         android:textColor="#FF000000"
-        android:onClick="voegMedewerkerToe"
+        android:onClick="voegShiftToe"
         android:layout_below="@+id/text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
