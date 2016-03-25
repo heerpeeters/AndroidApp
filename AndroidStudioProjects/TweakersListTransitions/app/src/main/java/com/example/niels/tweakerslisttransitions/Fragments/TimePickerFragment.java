@@ -14,6 +14,8 @@ public class TimePickerFragment extends DialogFragment
 
     private String title;
 
+    private int uur, minuut;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
@@ -34,7 +36,8 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        //((String)view.getTag()).equals("Beginuur");
+        uur = hourOfDay;
+        minuut = minute;
 
     }
 
@@ -44,4 +47,13 @@ public class TimePickerFragment extends DialogFragment
         this.title = title;
 
     }
+
+    public int getUur() {
+        return uur;
+    }
+
+    public int getMinuut() {
+        return minuut;
+    }
+
 }

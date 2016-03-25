@@ -89,7 +89,10 @@ public class ShiftCategorieAdapter extends BaseAdapter {
         if(mData.size() == position + 1)
             return true;
 
+
+
         return mData.size() > position + 1 && mData.get(position + 1) instanceof ShiftCategorie;
+
 
     }
 
@@ -139,7 +142,7 @@ public class ShiftCategorieAdapter extends BaseAdapter {
 
                 case TYPE_SEPARATOR:
                     //when the shiftcategory is the last in the list, add an add button
-                    if(mData.size() == position + 1)
+                    if(insertAddShiftButton(position))
                     {
                         convertView = mInflater.inflate(R.layout.shift_category_add_shift_button, null);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
