@@ -209,12 +209,6 @@ public class ShiftCategorieActivity extends ListActivity {
         timePickerBeginuur.setTitle("Beginuur");
         timePickerBeginuur.show(this.getFragmentManager(), "Beginuur");
 
-        TimePickerFragment timePickerEinduur = new TimePickerFragment();
-        timePickerEinduur.setTitle("Einduur");
-        timePickerEinduur.show(this.getFragmentManager(), "Einduur");
-
-        System.out.println(timePickerBeginuur.getUur());
-
     }
 
 }

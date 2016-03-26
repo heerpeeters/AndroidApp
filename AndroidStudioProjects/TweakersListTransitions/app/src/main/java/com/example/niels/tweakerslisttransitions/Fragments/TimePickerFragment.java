@@ -14,6 +14,8 @@ public class TimePickerFragment extends DialogFragment
 
     private String title;
 
+    private boolean displaySecondaryFragment;
+
     private int uur, minuut;
 
     @Override
@@ -36,8 +38,19 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        uur = hourOfDay;
-        minuut = minute;
+        if(!displaySecondaryFragment)
+        {
+
+            uur = hourOfDay;
+            minuut = minute;
+
+            displaySecondaryFragment = true;
+
+            TimePickerFragment timePickerEinduur = new TimePickerFragment();
+            timePickerEinduur.setTitle("Einduur");
+            timePickerEinduur.show(this.getFragmentManager(), "Einduur");
+
+        }
 
     }
 
