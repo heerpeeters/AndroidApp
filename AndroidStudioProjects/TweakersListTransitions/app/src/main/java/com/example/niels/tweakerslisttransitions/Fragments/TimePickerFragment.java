@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
+import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
+
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment
@@ -14,9 +16,11 @@ public class TimePickerFragment extends DialogFragment
 
     private String title;
 
-    private boolean displaySecondaryFragment;
+    private boolean displaySecondaryFragment = true;
 
-    private int uur, minuut;
+    private int beginuur, beginminuut, einduur, eindminuut;
+
+    private ShiftCategorie shiftCategorie;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -38,19 +42,30 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-        if(!displaySecondaryFragment)
+        if(displaySecondaryFragment)
         {
-
-            uur = hourOfDay;
-            minuut = minute;
-
-            displaySecondaryFragment = true;
 
             TimePickerFragment timePickerEinduur = new TimePickerFragment();
             timePickerEinduur.setTitle("Einduur");
+            timePickerEinduur.setDisplaySecondaryFragment(false);
+            timePickerEinduur.setBeginuur(hourOfDay);
+            timePickerEinduur.setBeginminuut(minute);
+            timePickerEinduur.setShiftCategorie(shiftCategorie);
             timePickerEinduur.show(this.getFragmentManager(), "Einduur");
 
         }
+        else
+        {
+
+            einduur = hourOfDay;
+            eindminuut = minute;
+
+            //add the shift to the shiftcategorie
+            getShiftCategorie().addShift(Integer.toString(beginuur) + ":" + Integer.toString(beginminuut), Integer.toString(einduur) + ":" + Integer.toString(eindminuut));
+
+        }
+
+
 
     }
 
@@ -61,12 +76,47 @@ public class TimePickerFragment extends DialogFragment
 
     }
 
-    public int getUur() {
-        return uur;
+    public int getBeginuur() {
+        return beginuur;
     }
 
-    public int getMinuut() {
-        return minuut;
+    public void setBeginuur(int beginuur) {
+        this.beginuur = beginuur;
     }
 
+    public int getBeginminuut() {
+        return beginminuut;
+    }
+
+    public void setBeginminuut(int beginminuut) {
+        this.beginminuut = beginminuut;
+    }
+
+    public int getEinduur() {
+        return einduur;
+    }
+
+    public void setEinduur(int einduur) {
+        this.einduur = einduur;
+    }
+
+    public int getEindminuut() {
+        return eindminuut;
+    }
+
+    public void setEindminuut(int eindminuut) {
+        this.eindminuut = eindminuut;
+    }
+
+    public void setDisplaySecondaryFragment(boolean displaySecondaryFragment) {
+        this.displaySecondaryFragment = displaySecondaryFragment;
+    }
+
+    public ShiftCategorie getShiftCategorie() {
+        return shiftCategorie;
+    }
+
+    public void setShiftCategorie(ShiftCategorie shiftCategorie) {
+        this.shiftCategorie = shiftCategorie;
+    }
 }

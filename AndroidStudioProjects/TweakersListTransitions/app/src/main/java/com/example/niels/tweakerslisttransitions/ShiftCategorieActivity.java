@@ -205,10 +205,18 @@ public class ShiftCategorieActivity extends ListActivity {
 
         final View view = v;
 
+
+
+        //this fragment loads both start hour of the shift and end hour and will create the new shift
         TimePickerFragment timePickerBeginuur = new TimePickerFragment();
         timePickerBeginuur.setTitle("Beginuur");
+        //get the shiftcategorie and pass it to the timepickerfragment
+        timePickerBeginuur.setShiftCategorie(mAdapter.getShiftCategorieForPosition((int)v.getTag()));
         timePickerBeginuur.show(this.getFragmentManager(), "Beginuur");
 
+        reloadData();
+
+        
     }
 
 }

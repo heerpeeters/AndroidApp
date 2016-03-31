@@ -75,6 +75,10 @@ public class ShiftCategorieAdapter extends BaseAdapter {
         return position;
     }
 
+    public ArrayList<iShift> getmData() {
+        return mData;
+    }
+
     public void clearData(){
 
         mData = new ArrayList<>();
@@ -113,6 +117,7 @@ public class ShiftCategorieAdapter extends BaseAdapter {
                                 convertView = mInflater.inflate(R.layout.shift_red_add_button, null);
                                 holder.textView = (TextView) convertView.findViewById(R.id.text);
                                 holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
+                                holder.addShiftButton.setTag(position);
                             }
                             else
                             {
@@ -129,6 +134,7 @@ public class ShiftCategorieAdapter extends BaseAdapter {
                                 convertView = mInflater.inflate(R.layout.shift_green_add_button, null);
                                 holder.textView = (TextView) convertView.findViewById(R.id.text);
                                 holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
+                                holder.addShiftButton.setTag(position);
 
                             }
                             else
@@ -147,6 +153,7 @@ public class ShiftCategorieAdapter extends BaseAdapter {
                         convertView = mInflater.inflate(R.layout.shift_category_add_shift_button, null);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
                         holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
+                        holder.addShiftButton.setTag(position);
 
                     }
                     else {
@@ -170,4 +177,24 @@ public class ShiftCategorieAdapter extends BaseAdapter {
         public Button addShiftButton;
     }
 
+    //This method will return the shiftcategorie that is related to the addshiftbutton in the listview
+    public ShiftCategorie getShiftCategorieForPosition(int position)
+    {
+
+        ShiftCategorie ret = null;
+
+        for(int i = 0; i <= position; i++)
+        {
+
+            if(getmData().get(i) instanceof ShiftCategorie)
+                ret = (ShiftCategorie) getmData().get(i);
+
+        }
+
+        return ret;
+
+    }
+
 }
+
+
