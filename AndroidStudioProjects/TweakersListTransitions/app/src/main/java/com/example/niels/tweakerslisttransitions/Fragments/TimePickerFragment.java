@@ -3,11 +3,17 @@ package com.example.niels.tweakerslisttransitions.Fragments;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
 import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
+import com.example.niels.tweakerslisttransitions.ShiftCategorieActivity;
 
 import java.util.Calendar;
 
@@ -21,6 +27,10 @@ public class TimePickerFragment extends DialogFragment
     private int beginuur, beginminuut, einduur, eindminuut;
 
     private ShiftCategorie shiftCategorie;
+
+    private ShiftCategorieActivity shiftCategorieActivity;
+
+    int medewerkers;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -51,6 +61,7 @@ public class TimePickerFragment extends DialogFragment
             timePickerEinduur.setBeginuur(hourOfDay);
             timePickerEinduur.setBeginminuut(minute);
             timePickerEinduur.setShiftCategorie(shiftCategorie);
+            timePickerEinduur.setShiftCategorieActivity(shiftCategorieActivity);
             timePickerEinduur.show(this.getFragmentManager(), "Einduur");
 
         }
@@ -60,13 +71,41 @@ public class TimePickerFragment extends DialogFragment
             einduur = hourOfDay;
             eindminuut = minute;
 
-            //add the shift to the shiftcategorie
-            getShiftCategorie().addShift(Integer.toString(beginuur) + ":" + Integer.toString(beginminuut), Integer.toString(einduur) + ":" + Integer.toString(eindminuut));
+            AlertDialog.Builder alert = new AlertDialog.Builder(shiftCategorieActivity);
+
+            alert.setTitle("Aantal medewerkers");
+            alert.setMessage("Geef het maximum aantal medewerkers");
+
+            // Set an EditText view to get user input
+            final NumberPicker input = new NumberPicker(shiftCategorieActivity);
+
+            String[] nums = new String[100];
+            for (int i=0; i<nums.length; i++)
+                nums[i] = Integer.toString(i);
+
+            input.setMinValue(1);
+            input.setMaxValue(nums.length - 1);
+            input.setWrapSelectorWheel(false);
+            input.setDisplayedValues(nums);
+            input.setValue(2);
+
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    medewerkers = input.getValue() - 1;
+                    //add the shift to the shiftcategorie
+                    getShiftCategorie().addShift(beginuur, beginminuut, einduur, eindminuut, medewerkers);
+                    shiftCategorieActivity.reloadData();
+                }
+            });
+
+            alert.setView(input);
+
+            alert.show();
 
         }
 
-
-
+        
     }
 
     public void setTitle(String title)
@@ -118,5 +157,13 @@ public class TimePickerFragment extends DialogFragment
 
     public void setShiftCategorie(ShiftCategorie shiftCategorie) {
         this.shiftCategorie = shiftCategorie;
+    }
+
+    public ShiftCategorieActivity getShiftCategorieActivity() {
+        return shiftCategorieActivity;
+    }
+
+    public void setShiftCategorieActivity(ShiftCategorieActivity shiftCategorieActivity) {
+        this.shiftCategorieActivity = shiftCategorieActivity;
     }
 }

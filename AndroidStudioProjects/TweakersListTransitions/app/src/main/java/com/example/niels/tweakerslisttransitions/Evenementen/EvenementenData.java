@@ -26,7 +26,6 @@ public class EvenementenData {
      * An array of sample (dummy) items.
      */
     public static List<Evenement> ITEMS = new ArrayList<Evenement>();
-
     /**
      * A map of sample (dummy) items, by ID.
      */
@@ -44,14 +43,14 @@ public class EvenementenData {
         fluolicious.getLijst().add(new ShiftCategorie("1", "Toog"));
         stamavond.getLijst().add(new ShiftCategorie("1", "Toog"));
 
-        cocktailavond.getById("1").getShiften().add(new Shift("20:00", "22:00", "1"));
-        cocktailavond.getById("1").getShiften().add(new Shift("22:00", "24:00", "2"));
+        cocktailavond.getById("1").getShiften().add(new Shift(20, 0, 22, 0, "1"));
+        cocktailavond.getById("1").getShiften().add(new Shift(22, 0, 24, 0, "2"));
 
-        fluolicious.getById("1").getShiften().add(new Shift("20:00", "22:00", "1"));
-        fluolicious.getById("1").getShiften().add(new Shift("22:00", "24:00", "2"));
+        fluolicious.getById("1").getShiften().add(new Shift(20, 0, 22, 0, "1"));
+        fluolicious.getById("1").getShiften().add(new Shift(22, 0, 24, 0, "2"));
 
-        stamavond.getById("1").getShiften().add(new Shift("20:00", "22:00", "1"));
-        stamavond.getById("1").getShiften().add(new Shift("22:00", "24:00", "2"));
+        stamavond.getById("1").getShiften().add(new Shift(20, 0, 22, 0, "1"));
+        stamavond.getById("1").getShiften().add(new Shift(22, 0, 24, 0, "2"));
 
         try {
             cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker("Rudy"));
@@ -71,13 +70,14 @@ public class EvenementenData {
         ITEM_MAP.put(evenement.getId(), evenement);
     }
 
-    public static Shift getShiftById(String eventId, String id){
+    public static Shift getShiftById(String eventId, String id, String categorieId){
 
         Evenement event = ITEM_MAP.get(eventId);
 
         for(ShiftCategorie sc : event.getLijst()){
 
-            return sc.getShiftById(id);
+            if(sc.getId().equals(categorieId))
+                return sc.getShiftById(id);
 
         }
         return null;

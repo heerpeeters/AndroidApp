@@ -11,7 +11,7 @@ public class Shift implements iShift{
     private String id;
 
     //later vervangen door Date of Time, zodat we met timepicker kunnen werken
-    private String beginUur, eindUur;
+    private int beginMinuut, beginUur, eindMinuut, eindUur;
 
     //lijst met medewerkers
     private List<Medewerker> medewerkers;
@@ -19,27 +19,25 @@ public class Shift implements iShift{
     //Het aantal medewerkers nodig voor de shift
     private int aantalMedewerkersNodig = 3;
 
-    public Shift(String start, String einde, String id){
+    public Shift(int beginUur, int beginMinuut, int eindUur, int eindMinuut, String id){
 
         setId(id);
-        setBeginUur(start);
-        setEindUur(einde);
+        setBeginUur(beginUur);
+        setBeginMinuut(beginMinuut);
+        setEindUur(eindUur);
+        setEindMinuut(eindMinuut);
         medewerkers = new ArrayList<>();
     }
 
-    public String getBeginUur() {
-        return beginUur;
-    }
+    public Shift(int beginUur, int beginMinuut, int eindUur, int eindMinuut, int aantalMedewerkers, String id){
 
-    public void setBeginUur(String beginUur) {
-        this.beginUur = beginUur;
-    }
-    public String getEindUur() {
-        return eindUur;
-    }
-
-    public void setEindUur(String eindUur) {
-        this.eindUur = eindUur;
+        setId(id);
+        setBeginUur(beginUur);
+        setBeginMinuut(beginMinuut);
+        setEindUur(eindUur);
+        setEindMinuut(eindMinuut);
+        setAantalMedewerkersNodig(aantalMedewerkers);
+        medewerkers = new ArrayList<>();
     }
 
     public List<Medewerker> getMedewerkers() {
@@ -76,6 +74,38 @@ public class Shift implements iShift{
 
     }
 
+    public int getBeginMinuut() {
+        return beginMinuut;
+    }
+
+    public void setBeginMinuut(int beginMinuut) {
+        this.beginMinuut = beginMinuut;
+    }
+
+    public int getBeginUur() {
+        return beginUur;
+    }
+
+    public void setBeginUur(int beginUur) {
+        this.beginUur = beginUur;
+    }
+
+    public int getEindMinuut() {
+        return eindMinuut;
+    }
+
+    public void setEindMinuut(int eindMinuut) {
+        this.eindMinuut = eindMinuut;
+    }
+
+    public int getEindUur() {
+        return eindUur;
+    }
+
+    public void setEindUur(int eindUur) {
+        this.eindUur = eindUur;
+    }
+
     public boolean isMaximumAantalMedewerkersBereikt(){
 
         return getMedewerkers().size() >= getAantalMedewerkersNodig();
@@ -93,7 +123,29 @@ public class Shift implements iShift{
     @Override
     public String toString(){
 
-        return getBeginUur()+ " - " + getEindUur() + "              " + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
+        String beginUur, beginMinuut, eindUur, eindMinuut;
+
+        if(getBeginUur() < 10)
+            beginUur = "0" + getBeginUur();
+        else
+            beginUur = Integer.toString(getBeginUur());
+
+        if(getBeginMinuut() < 10)
+            beginMinuut = "0" + getBeginMinuut();
+        else
+            beginMinuut = Integer.toString(getBeginMinuut());
+
+        if(getEindUur() < 10)
+            eindUur = "0" + getEindUur();
+        else
+            eindUur = Integer.toString(getEindUur());
+
+        if(getEindMinuut() < 10)
+            eindMinuut = "0" + getEindMinuut();
+        else
+            eindMinuut = Integer.toString(getEindMinuut());
+
+        return beginUur + ":" + beginMinuut + " - " + eindUur + ":" + eindMinuut + "              " + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
 
     }
 }

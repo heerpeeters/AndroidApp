@@ -65,10 +65,17 @@ public class ShiftCategorie implements iShift {
         throw new Resources.NotFoundException("Shift niet gevonden");
     }
 
-    public void addShift(String begintijd, String eindtijd){
+    public void addShift(int beginUur, int beginMinuut, int eindUur, int eindMinuut){
 
-        getShiften().add(new Shift(begintijd, eindtijd, Integer.toString(getShiften().size() + 1)));
+        getShiften().add(new Shift(beginUur, beginMinuut, eindUur, eindMinuut, Integer.toString(getShiften().size() + 1)));
 
     }
+
+    public void addShift(int beginUur, int beginMinuut, int eindUur, int eindMinuut, int medewerkers){
+
+        getShiften().add(new Shift(beginUur, beginMinuut, eindUur, eindMinuut, medewerkers, Integer.toString(getShiften().size() + 1)));
+
+    }
+
 
 }

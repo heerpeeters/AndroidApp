@@ -25,16 +25,11 @@ public class Evenement {
 
     }
 
-
-    public ArrayList<ShiftCategorie> getLijst() {
-        return lijst;
-    }
-
-    public void setLijst(ArrayList<ShiftCategorie> lijst) {
-        this.lijst = lijst;
-    }
+    private String id;
 
     private ArrayList<ShiftCategorie> lijst;
+
+    private String naam;
 
     public String getNaam() {
         return naam;
@@ -43,8 +38,6 @@ public class Evenement {
     public void setNaam(String naam) {
         this.naam = naam;
     }
-
-    private String naam;
 
     public Date getDatum() {
         return datum;
@@ -64,7 +57,13 @@ public class Evenement {
         this.id = id;
     }
 
-    private String id;
+    public ArrayList<ShiftCategorie> getLijst() {
+        return lijst;
+    }
+
+    public void setLijst(ArrayList<ShiftCategorie> lijst) {
+        this.lijst = lijst;
+    }
 
     //Gebruikt door ArrayAdapter om de tekst voor lijst item weer te geven
     @Override

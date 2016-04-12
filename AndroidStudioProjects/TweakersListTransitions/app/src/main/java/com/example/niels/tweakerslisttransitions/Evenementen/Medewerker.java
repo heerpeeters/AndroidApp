@@ -7,6 +7,8 @@ public class Medewerker {
 
     private String naam;
 
+    private int id;
+
     public Medewerker(String naam){
 
         setNaam(naam);

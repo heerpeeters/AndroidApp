@@ -40,7 +40,7 @@ public class ShiftDetailActivity extends ListActivity{
 
         intent = getIntent();
 
-        s = EvenementenData.getShiftById(intent.getStringExtra("eventId"),intent.getStringExtra("id"));
+        s = EvenementenData.getShiftById(intent.getStringExtra("eventId"),intent.getStringExtra("id"), intent.getStringExtra("categorieId"));
 
         mAdapter = new MedewerkerAdapter(this);
 

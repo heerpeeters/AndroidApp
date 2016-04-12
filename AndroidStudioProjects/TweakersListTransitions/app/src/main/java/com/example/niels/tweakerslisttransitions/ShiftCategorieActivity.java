@@ -94,6 +94,7 @@ public class ShiftCategorieActivity extends ListActivity {
 
         Intent shiftDetailIntent = new Intent(this, ShiftDetailActivity.class);
         shiftDetailIntent.putExtra("id", mAdapter.getItem(position).getId());
+        shiftDetailIntent.putExtra("categorieId", mAdapter.getShiftCategorieForPosition(position).getId());
         shiftDetailIntent.putExtra("eventId", evenement.getId());
         startActivity(shiftDetailIntent);
 
@@ -143,7 +144,7 @@ public class ShiftCategorieActivity extends ListActivity {
     }
 
     //this method reloads data to show new contents of list when things are changed
-    private void reloadData(){
+    public void reloadData(){
 
         mAdapter.clearData();
         for(ShiftCategorie sc : evenement.getLijst()){
@@ -190,7 +191,7 @@ public class ShiftCategorieActivity extends ListActivity {
 
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
+                return;
             }
         });
 
@@ -212,6 +213,8 @@ public class ShiftCategorieActivity extends ListActivity {
         timePickerBeginuur.setTitle("Beginuur");
         //get the shiftcategorie and pass it to the timepickerfragment
         timePickerBeginuur.setShiftCategorie(mAdapter.getShiftCategorieForPosition((int)v.getTag()));
+        //set the activity in order to reload the data.
+        timePickerBeginuur.setShiftCategorieActivity(this);
         timePickerBeginuur.show(this.getFragmentManager(), "Beginuur");
 
         reloadData();
