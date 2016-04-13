@@ -95,6 +95,7 @@ public class TimePickerFragment extends DialogFragment
                     medewerkers = input.getValue() - 1;
                     //add the shift to the shiftcategorie
                     getShiftCategorie().addShift(beginuur, beginminuut, einduur, eindminuut, medewerkers);
+
                     shiftCategorieActivity.reloadData();
                 }
             });
@@ -105,7 +106,7 @@ public class TimePickerFragment extends DialogFragment
 
         }
 
-        
+
     }
 
     public void setTitle(String title)

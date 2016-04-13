@@ -75,6 +75,7 @@ public class ShiftCategorie implements iShift {
 
         getShiften().add(new Shift(beginUur, beginMinuut, eindUur, eindMinuut, medewerkers, Integer.toString(getShiften().size() + 1)));
 
+
     }
 
 

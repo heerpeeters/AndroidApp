@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -57,6 +58,8 @@ public class ShiftCategorieActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final ListActivity activity = this;
+
         LayoutInflater inflater = this.getLayoutInflater();
 
         View v = inflater.inflate(R.layout.shift_category_add_button, null);
@@ -64,6 +67,84 @@ public class ShiftCategorieActivity extends ListActivity {
         setContentView(R.layout.shiftcategory_list);
 
         getListView().addFooterView(v);
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                //check if the long clicked item is shiftcategorie or shift
+                if(mAdapter.getItem(position) instanceof ShiftCategorie)
+                {
+
+                    final int positionToDelete = position;
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                    alert.setTitle("Shiftcategorie verwijderen");
+                    alert.setMessage("U staat op het punt een shiftcategorie te verwijderen. Als u doorgaat verwijdert u ook alle onderliggende shifts");
+
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            evenement.getLijst().remove(mAdapter.getItem(positionToDelete));
+
+                            reloadData();
+                        }
+                    });
+
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            return;
+
+                        }
+
+                    });
+
+                    alert.show();
+
+
+                }
+                //If it is a shiftitem, get the shiftcategorie first and then delete the shift on it
+                else
+                {
+
+                    final int positionToDelete = position;
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+                    alert.setTitle("Shift verwijderen");
+                    alert.setMessage("U staat op het punt een shift te verwijderen. Als u doorgaat verwijdert u ook de onderliggende medewerkers");
+
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            mAdapter.getShiftCategorieForPosition(positionToDelete).getShiften().remove(mAdapter.getItem(positionToDelete));
+
+                            reloadData();
+                        }
+                    });
+
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            return;
+
+                        }
+
+                    });
+
+                    alert.show();
+
+
+                }
+
+                reloadData();
+                return true;
+
+            }
+        });
+
 
         intent = getIntent();
 
@@ -150,6 +231,7 @@ public class ShiftCategorieActivity extends ListActivity {
         for(ShiftCategorie sc : evenement.getLijst()){
 
             mAdapter.addSectionHeaderItem(sc);
+
             for(Shift s : sc.getShiften()){
 
                 mAdapter.addItem(s);
@@ -159,6 +241,7 @@ public class ShiftCategorieActivity extends ListActivity {
         }
         mAdapter.notifyDataSetChanged();
         setListAdapter(mAdapter);
+
     }
 
     public void voegShiftCategorieToe(View v){
@@ -206,8 +289,6 @@ public class ShiftCategorieActivity extends ListActivity {
 
         final View view = v;
 
-
-
         //this fragment loads both start hour of the shift and end hour and will create the new shift
         TimePickerFragment timePickerBeginuur = new TimePickerFragment();
         timePickerBeginuur.setTitle("Beginuur");
@@ -217,9 +298,7 @@ public class ShiftCategorieActivity extends ListActivity {
         timePickerBeginuur.setShiftCategorieActivity(this);
         timePickerBeginuur.show(this.getFragmentManager(), "Beginuur");
 
-        reloadData();
 
-        
     }
 
 }
