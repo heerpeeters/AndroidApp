@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     >
 
     <!--<TextView
@@ -19,7 +20,7 @@
         android:visibility="visible"
         android:textAlignment="gravity"/> -->
 
-    <Button
+    <!--<Button
         android:id="@+id/event_add_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +34,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp"
-        android:padding="25dp"/>
+        android:padding="25dp"/> -->
+
+    <Button
+        android:id="@+id/row_add_button"
+        android:text="+"
+        android:onClick="voegEvenementToe"
+        style="@style/buttonBelowList" />
 
 </RelativeLayout>

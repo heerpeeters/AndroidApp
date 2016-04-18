@@ -54,9 +54,15 @@ public class ShiftCategorieActivity extends ListActivity {
 
     private ListView list;
 
+    private ShiftCategorie shiftCategorieSelected;
+
+    Bundle savedInstanceState;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.savedInstanceState = savedInstanceState;
 
         final ListActivity activity = this;
 
@@ -232,6 +238,8 @@ public class ShiftCategorieActivity extends ListActivity {
 
             mAdapter.addSectionHeaderItem(sc);
 
+            sc.sortShifts();
+
             for(Shift s : sc.getShiften()){
 
                 mAdapter.addItem(s);
@@ -293,7 +301,7 @@ public class ShiftCategorieActivity extends ListActivity {
         TimePickerFragment timePickerBeginuur = new TimePickerFragment();
         timePickerBeginuur.setTitle("Beginuur");
         //get the shiftcategorie and pass it to the timepickerfragment
-        timePickerBeginuur.setShiftCategorie(mAdapter.getShiftCategorieForPosition((int)v.getTag()));
+        this.setShiftCategorieSelected(mAdapter.getShiftCategorieForPosition((int) v.getTag()));
         //set the activity in order to reload the data.
         timePickerBeginuur.setShiftCategorieActivity(this);
         timePickerBeginuur.show(this.getFragmentManager(), "Beginuur");
@@ -301,4 +309,20 @@ public class ShiftCategorieActivity extends ListActivity {
 
     }
 
+    public void addShift(int beginuur, int beginminuut, int einduur, int eindminuut, int medewerkers)
+    {
+
+        getShiftCategorieSelected().addShift(beginuur, beginminuut, einduur, eindminuut, medewerkers);
+        this.reloadData();
+        this.onCreate(savedInstanceState);
+
+    }
+
+    public ShiftCategorie getShiftCategorieSelected() {
+        return shiftCategorieSelected;
+    }
+
+    public void setShiftCategorieSelected(ShiftCategorie shiftCategorieSelected) {
+        this.shiftCategorieSelected = shiftCategorieSelected;
+    }
 }

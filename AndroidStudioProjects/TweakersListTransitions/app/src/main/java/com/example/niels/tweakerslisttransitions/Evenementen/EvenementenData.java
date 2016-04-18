@@ -127,4 +127,11 @@ public class EvenementenData {
 
     }
 
+    public static void deleteEvent(int id)
+    {
+
+        ITEM_MAP.remove(ITEM_MAP.get(id));
+
+    }
+
 }

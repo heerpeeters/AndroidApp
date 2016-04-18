@@ -82,6 +82,14 @@ public class EvenementAdapter extends BaseAdapter {
 
     }
 
+    public ArrayList<Evenement> getmData() {
+        return mData;
+    }
+
+    public void setmData(ArrayList<Evenement> mData) {
+        this.mData = mData;
+    }
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
@@ -119,5 +127,6 @@ public class EvenementAdapter extends BaseAdapter {
         public TextView textView;
         public Button addButton;
     }
+
 
 }

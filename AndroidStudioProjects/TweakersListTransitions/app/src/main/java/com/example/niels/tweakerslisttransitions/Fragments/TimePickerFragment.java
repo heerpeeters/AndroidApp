@@ -26,8 +26,6 @@ public class TimePickerFragment extends DialogFragment
 
     private int beginuur, beginminuut, einduur, eindminuut;
 
-    private ShiftCategorie shiftCategorie;
-
     private ShiftCategorieActivity shiftCategorieActivity;
 
     int medewerkers;
@@ -60,7 +58,6 @@ public class TimePickerFragment extends DialogFragment
             timePickerEinduur.setDisplaySecondaryFragment(false);
             timePickerEinduur.setBeginuur(hourOfDay);
             timePickerEinduur.setBeginminuut(minute);
-            timePickerEinduur.setShiftCategorie(shiftCategorie);
             timePickerEinduur.setShiftCategorieActivity(shiftCategorieActivity);
             timePickerEinduur.show(this.getFragmentManager(), "Einduur");
 
@@ -94,9 +91,8 @@ public class TimePickerFragment extends DialogFragment
                 public void onClick(DialogInterface dialogInterface, int i) {
                     medewerkers = input.getValue() - 1;
                     //add the shift to the shiftcategorie
-                    getShiftCategorie().addShift(beginuur, beginminuut, einduur, eindminuut, medewerkers);
+                    shiftCategorieActivity.addShift(beginuur, beginminuut, einduur, eindminuut, medewerkers);
 
-                    shiftCategorieActivity.reloadData();
                 }
             });
 
@@ -150,14 +146,6 @@ public class TimePickerFragment extends DialogFragment
 
     public void setDisplaySecondaryFragment(boolean displaySecondaryFragment) {
         this.displaySecondaryFragment = displaySecondaryFragment;
-    }
-
-    public ShiftCategorie getShiftCategorie() {
-        return shiftCategorie;
-    }
-
-    public void setShiftCategorie(ShiftCategorie shiftCategorie) {
-        this.shiftCategorie = shiftCategorie;
     }
 
     public ShiftCategorieActivity getShiftCategorieActivity() {

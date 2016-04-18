@@ -3,6 +3,8 @@ package com.example.niels.tweakerslisttransitions.Evenementen;
 import android.content.res.Resources;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -75,6 +77,24 @@ public class ShiftCategorie implements iShift {
 
         getShiften().add(new Shift(beginUur, beginMinuut, eindUur, eindMinuut, medewerkers, Integer.toString(getShiften().size() + 1)));
 
+
+    }
+
+    public void sortShifts()
+    {
+
+        //This method will sort the shiftCategory based on the starting time
+        Collections.sort(getShiften(), new Comparator<Shift>() {
+            @Override
+            public int compare(Shift shift, Shift shift2) {
+
+                if(shift.getBeginUur() == shift2.getBeginUur())
+                    return shift.getBeginMinuut() - shift2.getBeginMinuut();
+                else
+                    return shift.getBeginUur() - shift2.getBeginUur();
+
+            }
+        });
 
     }
 
