@@ -93,8 +93,6 @@ public class ShiftCategorieAdapter extends BaseAdapter {
         if(mData.size() == position + 1)
             return true;
 
-
-
         return mData.size() > position + 1 && mData.get(position + 1) instanceof ShiftCategorie;
 
 
