@@ -2,6 +2,8 @@ package com.example.niels.tweakerslisttransitions.Evenementen;
 
 import android.content.res.Resources;
 
+import org.joda.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,15 +69,9 @@ public class ShiftCategorie implements iShift {
         throw new Resources.NotFoundException("Shift niet gevonden");
     }
 
-    public void addShift(int beginUur, int beginMinuut, int eindUur, int eindMinuut){
-
-        getShiften().add(new Shift(beginUur, beginMinuut, eindUur, eindMinuut, Integer.toString(getShiften().size() + 1)));
-
-    }
-
     public void addShift(int beginUur, int beginMinuut, int eindUur, int eindMinuut, int medewerkers){
 
-        getShiften().add(new Shift(beginUur, beginMinuut, eindUur, eindMinuut, medewerkers, Integer.toString(getShiften().size() + 1)));
+        getShiften().add(new Shift(new LocalTime(beginUur, beginMinuut),new LocalTime(eindUur, eindMinuut), medewerkers, Integer.toString(getShiften().size() + 1)));
 
 
     }

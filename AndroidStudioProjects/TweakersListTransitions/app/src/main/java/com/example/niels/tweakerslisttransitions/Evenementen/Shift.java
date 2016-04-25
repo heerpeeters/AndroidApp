@@ -1,6 +1,10 @@
 package com.example.niels.tweakerslisttransitions.Evenementen;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,31 +17,23 @@ public class Shift implements iShift{
     //later vervangen door Date of Time, zodat we met timepicker kunnen werken
     private int beginMinuut, beginUur, eindMinuut, eindUur;
 
+    private LocalTime startTime, endTime;
+
     //lijst met medewerkers
     private List<Medewerker> medewerkers;
 
     //Het aantal medewerkers nodig voor de shift
     private int aantalMedewerkersNodig = 3;
 
-    public Shift(int beginUur, int beginMinuut, int eindUur, int eindMinuut, String id){
+    public Shift(LocalTime startTime, LocalTime endTime, int aantalMederwerkers, String id)
+    {
 
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setAantalMedewerkersNodig(aantalMederwerkers);
         setId(id);
-        setBeginUur(beginUur);
-        setBeginMinuut(beginMinuut);
-        setEindUur(eindUur);
-        setEindMinuut(eindMinuut);
         medewerkers = new ArrayList<>();
-    }
 
-    public Shift(int beginUur, int beginMinuut, int eindUur, int eindMinuut, int aantalMedewerkers, String id){
-
-        setId(id);
-        setBeginUur(beginUur);
-        setBeginMinuut(beginMinuut);
-        setEindUur(eindUur);
-        setEindMinuut(eindMinuut);
-        setAantalMedewerkersNodig(aantalMedewerkers);
-        medewerkers = new ArrayList<>();
     }
 
     public List<Medewerker> getMedewerkers() {
@@ -106,6 +102,22 @@ public class Shift implements iShift{
         this.eindUur = eindUur;
     }
 
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
     public boolean isMaximumAantalMedewerkersBereikt(){
 
         return getMedewerkers().size() >= getAantalMedewerkersNodig();
@@ -121,31 +133,10 @@ public class Shift implements iShift{
 
     //Wordt gebruikt door arrayadpter voor de tekst voor lijst item
     @Override
-    public String toString(){
+    public String toString()
+    {
 
-        String beginUur, beginMinuut, eindUur, eindMinuut;
-
-        if(getBeginUur() < 10)
-            beginUur = "0" + getBeginUur();
-        else
-            beginUur = Integer.toString(getBeginUur());
-
-        if(getBeginMinuut() < 10)
-            beginMinuut = "0" + getBeginMinuut();
-        else
-            beginMinuut = Integer.toString(getBeginMinuut());
-
-        if(getEindUur() < 10)
-            eindUur = "0" + getEindUur();
-        else
-            eindUur = Integer.toString(getEindUur());
-
-        if(getEindMinuut() < 10)
-            eindMinuut = "0" + getEindMinuut();
-        else
-            eindMinuut = Integer.toString(getEindMinuut());
-
-        return beginUur + ":" + beginMinuut + " - " + eindUur + ":" + eindMinuut + "              " + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
+        return startTime.toString("HH:mm") + " - " + endTime.toString("HH:mm") + "          " + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
 
     }
 }

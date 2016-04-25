@@ -5,6 +5,9 @@ import android.widget.Toast;
 
 import com.example.niels.tweakerslisttransitions.ShiftCategorieActivity;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,14 +46,15 @@ public class EvenementenData {
         fluolicious.getLijst().add(new ShiftCategorie("1", "Toog"));
         stamavond.getLijst().add(new ShiftCategorie("1", "Toog"));
 
-        cocktailavond.getById("1").getShiften().add(new Shift(20, 0, 22, 0, "1"));
-        cocktailavond.getById("1").getShiften().add(new Shift(22, 0, 24, 0, "2"));
+        //cocktailavond.getById("1").getShiften().add(new Shift(20, 0, 22, 0, "1"));
+        cocktailavond.getById("1").getShiften().add(new Shift(new LocalTime(20, 0), new LocalTime(22, 0), 3, "1"));
+        cocktailavond.getById("1").getShiften().add(new Shift(new LocalTime(22, 0), new LocalTime(0, 0), 3, "2"));
 
-        fluolicious.getById("1").getShiften().add(new Shift(20, 0, 22, 0, "1"));
-        fluolicious.getById("1").getShiften().add(new Shift(22, 0, 24, 0, "2"));
+        fluolicious.getById("1").getShiften().add(new Shift(new LocalTime(20, 0), new LocalTime(22, 0), 3, "1"));
+        fluolicious.getById("1").getShiften().add(new Shift(new LocalTime(22, 0), new LocalTime(0, 0), 3, "2"));
 
-        stamavond.getById("1").getShiften().add(new Shift(20, 0, 22, 0, "1"));
-        stamavond.getById("1").getShiften().add(new Shift(22, 0, 24, 0, "2"));
+        stamavond.getById("1").getShiften().add(new Shift(new LocalTime(20, 0), new LocalTime(22, 0), 3, "1"));
+        stamavond.getById("1").getShiften().add(new Shift(new LocalTime(22, 0), new LocalTime(0, 0), 3, "2"));
 
         try {
             cocktailavond.getById("1").getShiftById("1").voegMedewerkerToe(new Medewerker("Rudy"));
