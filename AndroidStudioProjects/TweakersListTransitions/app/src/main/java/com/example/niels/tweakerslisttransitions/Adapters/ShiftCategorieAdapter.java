@@ -101,7 +101,7 @@ public class ShiftCategorieAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         int rowType = getItemViewType(position);
-
+        Shift shift;
         if (convertView == null) {
             holder = new ViewHolder();
             switch (rowType) {
@@ -113,14 +113,16 @@ public class ShiftCategorieAdapter extends BaseAdapter {
                             if(insertAddShiftButton(position))
                             {
                                 convertView = mInflater.inflate(R.layout.shift_red_add_button, null);
-                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                                holder.textView = (TextView) convertView.findViewById(R.id.hour);
+                                holder.workers = (TextView) convertView.findViewById(R.id.workers);
                                 holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
                                 holder.addShiftButton.setTag(position);
                             }
                             else
                             {
                                 convertView = mInflater.inflate(R.layout.shift_red, null);
-                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                                holder.textView = (TextView) convertView.findViewById(R.id.hour);
+                                holder.workers = (TextView) convertView.findViewById(R.id.workers);
                             }
 
                         }
@@ -130,7 +132,8 @@ public class ShiftCategorieAdapter extends BaseAdapter {
                             {
 
                                 convertView = mInflater.inflate(R.layout.shift_green_add_button, null);
-                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                                holder.textView = (TextView) convertView.findViewById(R.id.hour);
+                                holder.workers = (TextView) convertView.findViewById(R.id.workers);
                                 holder.addShiftButton = (Button) convertView.findViewById(R.id.shift_add_button);
                                 holder.addShiftButton.setTag(position);
 
@@ -138,7 +141,8 @@ public class ShiftCategorieAdapter extends BaseAdapter {
                             else
                             {
                                 convertView = mInflater.inflate(R.layout.shift_green, null);
-                                holder.textView = (TextView) convertView.findViewById(R.id.text);
+                                holder.textView = (TextView) convertView.findViewById(R.id.hour);
+                                holder.workers = (TextView) convertView.findViewById(R.id.workers);
                             }
 
                         }
@@ -165,13 +169,17 @@ public class ShiftCategorieAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.textView.setText(mData.get(position).toString());
-
+        if(rowType == TYPE_ITEM)
+        {
+            shift = (Shift) mData.get(position);
+            holder.workers.setText(shift.toStringWorkers());
+        }
 
         return convertView;
     }
 
     public static class ViewHolder {
-        public TextView textView;
+        public TextView textView, workers;
         public Button addShiftButton;
     }
 

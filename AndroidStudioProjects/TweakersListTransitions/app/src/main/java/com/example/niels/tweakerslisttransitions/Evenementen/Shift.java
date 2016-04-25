@@ -23,7 +23,7 @@ public class Shift implements iShift{
     private List<Medewerker> medewerkers;
 
     //Het aantal medewerkers nodig voor de shift
-    private int aantalMedewerkersNodig = 3;
+    private int aantalMedewerkersNodig;
 
     public Shift(LocalTime startTime, LocalTime endTime, int aantalMederwerkers, String id)
     {
@@ -136,7 +136,14 @@ public class Shift implements iShift{
     public String toString()
     {
 
-        return startTime.toString("HH:mm") + " - " + endTime.toString("HH:mm") + "          " + getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
+        return startTime.toString("HH:mm") + " - " + endTime.toString("HH:mm");
+
+    }
+
+    public String toStringWorkers()
+    {
+
+        return getMedewerkers().size() + "/" + getAantalMedewerkersNodig();
 
     }
 }
