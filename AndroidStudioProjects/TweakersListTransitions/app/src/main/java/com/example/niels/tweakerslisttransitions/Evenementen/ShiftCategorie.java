@@ -84,10 +84,7 @@ public class ShiftCategorie implements iShift {
             @Override
             public int compare(Shift shift, Shift shift2) {
 
-                if(shift.getBeginUur() == shift2.getBeginUur())
-                    return shift.getBeginMinuut() - shift2.getBeginMinuut();
-                else
-                    return shift.getBeginUur() - shift2.getBeginUur();
+                return shift.getStartTime().compareTo(shift2.getStartTime());
 
             }
         });

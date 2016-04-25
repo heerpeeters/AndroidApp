@@ -82,6 +82,8 @@ public class ShiftCategorieActivity extends ListActivity {
                 if(mAdapter.getItem(position) instanceof ShiftCategorie)
                 {
 
+                    ((ShiftCategorie) mAdapter.getItem(position)).sortShifts();
+
                     final int positionToDelete = position;
 
                     AlertDialog.Builder alert = new AlertDialog.Builder(activity);
@@ -313,8 +315,9 @@ public class ShiftCategorieActivity extends ListActivity {
     {
 
         getShiftCategorieSelected().addShift(beginuur, beginminuut, einduur, eindminuut, medewerkers);
-        this.reloadData();
-        this.onCreate(savedInstanceState);
+        getShiftCategorieSelected().sortShifts();
+        finish();
+        startActivity(getIntent());
 
     }
 
