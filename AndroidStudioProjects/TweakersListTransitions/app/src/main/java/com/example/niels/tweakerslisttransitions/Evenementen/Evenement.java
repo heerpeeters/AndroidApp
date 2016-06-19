@@ -2,6 +2,8 @@ package com.example.niels.tweakerslisttransitions.Evenementen;
 
 import android.content.res.Resources;
 
+import com.example.niels.tweakerslisttransitions.Persistence.APIHandler;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +22,17 @@ public class Evenement {
         Calendar c = Calendar.getInstance();
 
         setDatum(c.getTime());
+
+        lijst = new ArrayList<>();
+
+    }
+
+    public Evenement(String id, String naam, Date date)
+    {
+
+        setId(id);
+        setNaam(naam);
+        setDatum(date);
 
         lijst = new ArrayList<>();
 

@@ -19,9 +19,14 @@ import com.example.niels.tweakerslisttransitions.Adapters.EvenementAdapter;
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
 import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
+import com.example.niels.tweakerslisttransitions.Persistence.APIHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 /**
@@ -50,9 +55,30 @@ public class EvenementListActivity extends ListActivity {
 
     private EvenementAdapter mAdapter;
 
+    private ArrayList<Evenement> events;
+
+    private APIHandler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        handler = new APIHandler();
+
+        handler.doQuery();
+
+        try {
+            handler.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        events = handler.getEvents();
 
         LayoutInflater inflater = this.getLayoutInflater();
 
@@ -63,6 +89,15 @@ public class EvenementListActivity extends ListActivity {
         getListView().addFooterView(v);
 
         mAdapter = new EvenementAdapter(this);
+
+        for (Evenement event : events)
+        {
+
+            mAdapter.addSectionHeaderItem(event);
+
+        }
+
+        mAdapter.setmData(events);
 
         final ListActivity activity = this;
 
@@ -106,8 +141,6 @@ public class EvenementListActivity extends ListActivity {
 
         );
 
-        loadData();
-
         setListAdapter(mAdapter);
 
         // TODO: If exposing deep links into your app, handle intents here.
@@ -138,12 +171,13 @@ public class EvenementListActivity extends ListActivity {
 
     private void loadData() {
 
-        EvenementenData.orderEventsByDate();
-
-        for(Map.Entry<String, Evenement> event: EvenementenData.ITEM_MAP.entrySet())
-            mAdapter.addSectionHeaderItem(event.getValue());
+        for(Evenement event: events)
+        {
+            mAdapter.addSectionHeaderItem(event);
+        }
 
     }
+
     public void reloadData(){
 
         mAdapter.clearData();
