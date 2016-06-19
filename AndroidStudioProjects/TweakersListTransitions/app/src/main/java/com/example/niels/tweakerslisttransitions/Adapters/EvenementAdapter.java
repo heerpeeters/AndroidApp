@@ -111,6 +111,7 @@ public class EvenementAdapter extends BaseAdapter {
                     else{*/
                         convertView = mInflater.inflate(R.layout.snippet_item2, null);
                         holder.textView = (TextView) convertView.findViewById(R.id.textSeparator);
+                        holder.textView.setTag(mData.get(position).getId());
                     //}
                     break;
             }

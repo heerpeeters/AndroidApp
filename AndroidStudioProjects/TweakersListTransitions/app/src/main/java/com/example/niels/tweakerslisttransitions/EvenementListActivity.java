@@ -4,11 +4,15 @@ import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +24,16 @@ import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
 import com.example.niels.tweakerslisttransitions.Evenementen.ShiftCategorie;
 import com.example.niels.tweakerslisttransitions.Persistence.APIHandler;
+import com.example.niels.tweakerslisttransitions.Persistence.AddEventHandler;
+import com.example.niels.tweakerslisttransitions.Persistence.DeleteEventHandler;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -47,10 +59,6 @@ import java.util.concurrent.TimeoutException;
  */
 public class EvenementListActivity extends ListActivity {
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
     private boolean mTwoPane;
 
     private EvenementAdapter mAdapter;
@@ -58,6 +66,13 @@ public class EvenementListActivity extends ListActivity {
     private ArrayList<Evenement> events;
 
     private APIHandler handler;
+
+    private SwipeRefreshLayout swipeContainer;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +101,34 @@ public class EvenementListActivity extends ListActivity {
 
         setContentView(R.layout.lijst);
 
+        //enables pull to refresh
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+
+                swipeContainer.setRefreshing(true);
+
+                reloadData();
+
+            }
+
+        });
+
+        //sets swipecontainer colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+
         getListView().addFooterView(v);
 
         mAdapter = new EvenementAdapter(this);
 
-        for (Evenement event : events)
-        {
+        for (Evenement event : events) {
 
             mAdapter.addSectionHeaderItem(event);
 
@@ -108,7 +145,9 @@ public class EvenementListActivity extends ListActivity {
                                                      public boolean onItemLongClick(AdapterView<?> arg0, View v,
                                                                                     int index, long arg3) {
 
-                                                         final int plaats = index;
+                                                         View textView = v.findViewById(R.id.textSeparator);
+
+                                                         final String id = (String)textView.getTag();
 
                                                          AlertDialog.Builder alert = new AlertDialog.Builder(activity);
 
@@ -118,7 +157,7 @@ public class EvenementListActivity extends ListActivity {
                                                          alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                              public void onClick(DialogInterface dialog, int whichButton) {
 
-                                                                 deleteEvent(plaats);
+                                                                 deleteEvent(id);
                                                                  reloadData();
 
                                                              }
@@ -141,14 +180,43 @@ public class EvenementListActivity extends ListActivity {
 
         );
 
+        //Don't allow refreshing if we are not at the top of the list
+        getListView().setOnScrollListener(new android.widget.AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+
+                ListView listView = getListView();
+
+                boolean enable = false;
+                if (listView != null && listView.getChildCount() > 0) {
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = listView.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = listView.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipeContainer.setEnabled(enable);
+            }
+        });
+
         setListAdapter(mAdapter);
 
         // TODO: If exposing deep links into your app, handle intents here.
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
 
         super.onResume();
         mAdapter.clearData();
@@ -158,7 +226,7 @@ public class EvenementListActivity extends ListActivity {
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id){
+    protected void onListItemClick(ListView l, View v, int position, long id) {
 
         super.onListItemClick(l, v, position, id);
 
@@ -168,25 +236,49 @@ public class EvenementListActivity extends ListActivity {
 
     }
 
-
+    //possibly obsolete
     private void loadData() {
 
-        for(Evenement event: events)
-        {
+        for (Evenement event : events) {
             mAdapter.addSectionHeaderItem(event);
         }
 
     }
 
-    public void reloadData(){
+    public void reloadData() {
+
+
+        handler = new APIHandler();
+
+        handler.doQuery();
+
+        try {
+            handler.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         mAdapter.clearData();
-        loadData();
+
+        ArrayList<Evenement> newEvents = handler.getEvents();
+        for (Evenement event : newEvents) {
+
+            mAdapter.addSectionHeaderItem(event);
+
+        }
+
+        mAdapter.setmData(newEvents);
+
         mAdapter.notifyDataSetChanged();
         setListAdapter(mAdapter);
+
+        swipeContainer.setRefreshing(false);
+
     }
 
-    public void voegEvenementToe(View v){
+    public void voegEvenementToe(View v) {
 
         final View view = v;
 
@@ -203,14 +295,16 @@ public class EvenementListActivity extends ListActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 try {
-                    Map<String, Evenement> evenementen = EvenementenData.ITEM_MAP;
-                    int id = Integer.parseInt(evenementen.get(Integer.toString(evenementen.size())).getId()) + 1;
-                    EvenementenData.ITEM_MAP.put(Integer.toString(id), new Evenement(Integer.toString(id), value));
-                    reloadData();
-                    mAdapter.notifyDataSetChanged();
+
                     DatePickerFragment newFragment = new DatePickerFragment();
-                    newFragment.setId(id);
+
+                    AddEventHandler handler = new AddEventHandler();
+
+                    newFragment.setHandler(handler);
+                    newFragment.setName(value);
+
                     newFragment.show(getFragmentManager(), "Dag kiezen");
+
                     reloadData();
                     mAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
@@ -231,10 +325,53 @@ public class EvenementListActivity extends ListActivity {
 
     }
 
-    public void deleteEvent(int id)
-    {
+    public void deleteEvent(String id) {
 
-        EvenementenData.deleteEvent(id);
+        DeleteEventHandler handler = new DeleteEventHandler(id);
 
+        handler.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        this.reloadData();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "EvenementList Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.niels.tweakerslisttransitions/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "EvenementList Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.niels.tweakerslisttransitions/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }

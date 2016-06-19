@@ -12,6 +12,10 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import com.example.niels.tweakerslisttransitions.Evenementen.EvenementenData;
+import com.example.niels.tweakerslisttransitions.Persistence.APIHandler;
+import com.example.niels.tweakerslisttransitions.Persistence.AddEventHandler;
+
+import org.joda.time.DateTime;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +30,10 @@ public class DatePickerFragment extends DialogFragment
     private int id;
 
     private Calendar kalender;
+
+    private AddEventHandler handler;
+
+    private String name;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -43,10 +51,9 @@ public class DatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         kalender = Calendar.getInstance();
         kalender.set(year, monthOfYear, dayOfMonth);
-        EvenementenData.ITEM_MAP.get(Integer.toString(id)).setDatum(kalender.getTime());
-        EvenementenData.orderEventsByDate();
-        //use this to reload the date right after event has been created.
-        ((EvenementListActivity)getActivity()).reloadData();
+
+        handler.doQuery(name, new DateTime(kalender.getTime()));
+
         dismiss();
     }
 
@@ -54,4 +61,11 @@ public class DatePickerFragment extends DialogFragment
         this.id = id;
     }
 
+    public void setHandler(AddEventHandler handler) {
+        this.handler = handler;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

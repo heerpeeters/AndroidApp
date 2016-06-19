@@ -5,13 +5,25 @@ import android.util.Log;
 
 import com.example.niels.tweakerslisttransitions.Evenementen.Evenement;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
+import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class APIHandler extends AsyncTask {
 
-    final private String apiUrl = "http://shiftmanagerapi.azurewebsites.net/api/shift";
+    private String apiUrl = "http://shiftmanagerapi.azurewebsites.net/api/shift";
 
     private String test = null;
 
@@ -30,7 +42,7 @@ public class APIHandler extends AsyncTask {
     public void doQuery()
     {
 
-        this.execute();
+        this.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -43,6 +55,8 @@ public class APIHandler extends AsyncTask {
 
             // get json string from url
             //JSONObject json = jParser.getJSONFromUrl(apiUrl);
+
+            apiUrl = "http://shiftmanagerapi.azurewebsites.net/api/shift/GetEvents";
 
             dataJsonArr = jParser.getJSONFromUrl(apiUrl);//json.getJSONArray("ArrayOfEvent");
 
